@@ -43,6 +43,14 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/tarot",
   },
   {
+    id: "oraculum",
+    name: "ตำราพยากรณ์นโปเลียน",
+    origin: "western",
+    description: "ตั้งคำถาม 1 ใน 32 ข้อ ขีดเส้น 5 บรรทัดตามใจ แล้วรับคำพยากรณ์จากสัญลักษณ์ 32 แบบ",
+    available: true,
+    href: "/oraculum",
+  },
+  {
     id: "bazi",
     name: "ปาจื้อ (Bazi)",
     origin: "chinese",

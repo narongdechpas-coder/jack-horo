@@ -22,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/thai-seven" className="hover:text-[var(--text)]">เลข 7 ตัว</Link>
               <Link href="/playing-cards" className="hover:text-[var(--text)]">ไพ่ป๊อก</Link>
               <Link href="/tarot" className="hover:text-[var(--text)]">ไพ่ยิปซี</Link>
+              <Link href="/oraculum" className="hover:text-[var(--text)]">นโปเลียน</Link>
               <Link href="/bazi" className="hover:text-[var(--text)]">ปาจื้อ</Link>
             </div>
           </nav>

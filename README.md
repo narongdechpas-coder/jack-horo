@@ -7,6 +7,7 @@
 | 🇹🇭 เลข 7 ตัว (ทักษา 4 ฐาน) | ✅ ใช้งานได้ |
 | 🃏 ไพ่ป๊อก 52 ใบ (ไพ่ประจำวัน / อดีต-ปัจจุบัน-อนาคต) | ✅ ใช้งานได้ |
 | 🔮 ไพ่ยิปซี (Tarot) Rider-Waite 78 ใบ (1 / 3 / ความรัก 5 / Celtic Cross 10 ใบ) | ✅ ใช้งานได้ |
+| 📜 ตำราพยากรณ์นโปเลียน (Oraculum) 32 คำถาม 32 คำพยากรณ์ | ✅ ใช้งานได้ |
 | 🀄 ปาจื้อ (Bazi) สี่เสา ธาตุทั้งห้า วัยจร 10 ปี | ✅ ใช้งานได้ |
 
 ## เริ่มใช้งาน
@@ -62,6 +63,7 @@ src/
     playing-cards/           # deck.ts, draw.ts, spreads.ts + tests
     tarot/                   # deck.ts (ความหมายไทย 78 ใบ), spreads.ts + tests
     bazi/                    # names.ts, calculate.ts + tests
+    oraculum/                # data.ts (คำถามและคำพยากรณ์), oracle.ts + tests
   lib/random.ts              # PRNG แบบใส่ seed ใช้ร่วมกันทุกศาสตร์ไพ่
 public/tarot/                # ภาพไพ่ยิปซี (WebP)
 scripts/prepare-tarot-images.mjs
