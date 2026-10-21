@@ -29,9 +29,9 @@ npm start          # เปิดเว็บจาก out/
 
 ### Deploy
 
-ทุกครั้งที่ push ขึ้น branch ที่ตั้งไว้ใน `.github/workflows/deploy-pages.yml` ระบบจะรันเทสต์ build แล้วเผยแพร่ไปที่ branch `gh-pages` อัตโนมัติ เว็บจะออนไลน์ที่ https://narongdechpas-coder.github.io/learn/
+ทุกครั้งที่ push ขึ้น `main` ระบบจะรันเทสต์ build แล้วเผยแพร่ไปที่ branch `gh-pages` อัตโนมัติ เว็บจะออนไลน์ที่ https://narongdechpas-coder.github.io/jack-horo/
 
-ถ้าจะ deploy ใต้ path อื่น ให้ตั้ง `NEXT_PUBLIC_BASE_PATH` (เช่น `/learn`) ตอน build
+ถ้าจะ deploy ใต้ path อื่น ให้ตั้ง `NEXT_PUBLIC_BASE_PATH` (เช่น `/jack-horo`) ตอน build
 
 ## หลักการทำงาน
 

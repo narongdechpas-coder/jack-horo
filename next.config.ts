@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-// Set when deploying under a sub-path, e.g. GitHub Pages at /learn
+// Set when deploying under a sub-path, e.g. GitHub Pages at /jack-horo
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 // Static export: the whole app runs in the browser, no server or API key needed.
