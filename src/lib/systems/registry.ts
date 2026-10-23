@@ -35,7 +35,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/thai-seven",
     accent: "blue",
     art: "cat-thai-seven",
-    artAlt: "เลข 7 เรืองแสงล้อมด้วยดวงดาวหมายเลข 1 ถึง 7",
+    artAlt: "ลายเส้นทองรูปเลข 7 ล้อมด้วยวงโคจรของดาว 7 ดวง บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "zodiac",
@@ -46,7 +46,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/zodiac",
     accent: "orange",
     art: "cat-zodiac",
-    artAlt: "วงล้อจักรราศีเรืองแสงที่มีดวงอาทิตย์และพระจันทร์เสี้ยวอยู่ตรงกลาง ล้อมด้วยดาวเคราะห์",
+    artAlt: "ลายเส้นทองรูปวงล้อจักรราศี 12 ช่อง มีดวงอาทิตย์อยู่ตรงกลาง บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "numerology",
@@ -57,7 +57,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/numerology",
     accent: "teal",
     art: "cat-numerology",
-    artAlt: "ตัวเลข 1 ถึง 9 ในลูกแก้วเรืองแสงเรียงเป็นวงล้อมเกลียวทองคำ ท่ามกลางเสาวิหารกรีกโบราณ",
+    artAlt: "ลายเส้นทองรูปเกลียวทองคำล้อมด้วยตัวเลข 1 ถึง 9 บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "playing-cards",
@@ -68,7 +68,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/playing-cards",
     accent: "magenta",
     art: "cat-playing-cards",
-    artAlt: "ไพ่โพดำ หัวใจ และดอกจิก ลอยอยู่กลางอวกาศ",
+    artAlt: "ลายเส้นทองรูปไพ่ 3 ใบ โพดำ หัวใจ และดอกจิก บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "tarot",
@@ -79,7 +79,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/tarot",
     accent: "purple",
     art: "cat-tarot",
-    artAlt: "ไพ่ยิปซีห้าใบรูปดวงอาทิตย์ ดวงจันทร์ และดวงดาว",
+    artAlt: "ลายเส้นทองรูปไพ่ยิปซี 3 ใบ ดวงจันทร์ ดวงอาทิตย์ และดวงดาว บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "oraculum",
@@ -90,7 +90,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/oraculum",
     accent: "cyan",
     art: "cat-oraculum",
-    artAlt: "ตำราโบราณเปิดอยู่ มีจุดดาวเรืองแสงห้าแถวลอยขึ้นจากหน้ากระดาษ",
+    artAlt: "ลายเส้นทองรูปตำราเปิด มีจุดดาวห้าแถวลอยขึ้นใต้ช่อมะกอก บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "bazi",
@@ -101,7 +101,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/bazi",
     accent: "gold",
     art: "cat-bazi",
-    artAlt: "เสาสี่ต้นใต้วงแปดทิศและสัญลักษณ์ธาตุทั้งห้า",
+    artAlt: "ลายเส้นทองรูปเสาสี่ต้นใต้หยินหยางในกรอบแปดทิศ บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "iching",
@@ -112,6 +112,6 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/iching",
     accent: "jade",
     art: "cat-iching",
-    artAlt: "เหรียญจีนโบราณสามเหรียญลอยเหนือคัมภีร์ไม้ไผ่ ใต้เส้นเรืองแสงหกเส้น ตรีแกรม และหยินหยาง ท่ามกลางภูเขาจีน",
+    artAlt: "ลายเส้นทองรูปเส้นหกเส้นของอี้จิงเหนือเหรียญจีนโบราณสามเหรียญ บนพื้นน้ำเงินเข้ม",
   },
 ];
