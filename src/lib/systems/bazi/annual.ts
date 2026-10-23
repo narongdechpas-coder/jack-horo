@@ -70,6 +70,11 @@ export function yearPillarAt(date: Date): YearPillar {
   return { gan: gz[0], zhi: gz[1], stem: STEMS[gz[0]], branch: BRANCHES[gz[1]], yearBE: date.getFullYear() - (beforeLiChun ? 1 : 0) + 543 };
 }
 
+/** วันกลางปีปาจื้อถัดไปอีก `ahead` ปี (ใช้ดูดวงปีหน้า) */
+export function yearsAhead(today: Date, ahead: number): Date {
+  return new Date(yearPillarAt(today).yearBE - 543 + ahead, 5, 1);
+}
+
 const supports = (r: BaziResult, e: Element) => (r.favorable.includes(e) ? true : r.unfavorable.includes(e) ? false : null);
 
 export function annualBazi(r: BaziResult, today: Date): AnnualBazi {
@@ -119,11 +124,11 @@ export function annualStory(a: AnnualBazi): { body: string; advice: string } {
 }
 
 /** ข้อความสำหรับหมอดู AI (ใช้ศัพท์ได้ เพราะ AI จะเล่าให้ผู้ใช้ฟังเอง) */
-export function annualContext(a: AnnualBazi): string {
+export function annualContext(a: AnnualBazi, title = "ดวงปีนี้"): string {
   const god = TEN_GODS[a.tenGod];
   const sup = (s: boolean | null) => (s === true ? "ธาตุที่ส่งเสริมดวง" : s === false ? "ธาตุที่ควรเลี่ยง" : "เป็นกลาง");
   return [
-    `ดวงปีนี้ (流年, เปลี่ยนปีที่ลี่ชุน): ${yearLabel(a)} เสาปี ${a.pillar.gan}${a.pillar.zhi}`,
+    `${title} (流年, เปลี่ยนปีที่ลี่ชุน): ${yearLabel(a)} เสาปี ${a.pillar.gan}${a.pillar.zhi}`,
     `- ก้านปี ${el(a.pillar.stem.element)} (${sup(a.stemSupports)}) · กิ่งปี ${el(a.pillar.branch.element)} (${sup(a.branchSupports)})`,
     `- ก้านปีเทียบธาตุประจำตัว = ${god.th}: ${god.meaning} · บรรยากาศของปี: ${YEAR_TEN_GOD[a.tenGod].story}`,
     `- ปีชงกับปีเกิด: ${a.clashYear ? "ใช่" : "ไม่"} · ชงกับวันเกิด (ตัวเองและคู่ครอง): ${a.clashDay ? "ใช่" : "ไม่"} · ปีนักษัตรเดียวกับปีเกิด: ${a.sameAsBirthYear ? "ใช่" : "ไม่"} · จับคู่ส่งเสริม (六合): ${a.combines ? "ใช่" : "ไม่"}`,

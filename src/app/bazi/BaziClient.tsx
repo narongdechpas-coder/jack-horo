@@ -95,7 +95,7 @@ export function BaziClient() {
             key={`${qDate}-${qTime}-${qGender}`}
             systemName="ปาจื้อ"
             context={baziContext(result, todayDate)}
-            suggestions={["ปีนี้ดวงเป็นยังไง", "ช่วงนี้ควรทำอะไรเพื่อเสริมดวง", "งานแบบไหนเหมาะกับธาตุของฉัน"]}
+            suggestions={["ปีนี้ดวงเป็นยังไง", "ปีหน้าดวงเป็นยังไง", "ช่วงนี้ควรทำอะไรเพื่อเสริมดวง"]}
           />
           <details className="rounded-xl border border-[var(--border)] p-4">
             <summary className="cursor-pointer font-semibold">ดูผังดวงสี่เสา (สำหรับผู้สนใจโหราศาสตร์จีน)</summary>

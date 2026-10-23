@@ -3,7 +3,7 @@
 
 import type { BaziResult } from "@/lib/systems/bazi/calculate";
 import { ELEMENT_INFO } from "@/lib/systems/bazi/names";
-import { annualBazi, annualContext } from "@/lib/systems/bazi/annual";
+import { annualBazi, annualContext, yearsAhead } from "@/lib/systems/bazi/annual";
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import type { OracleReading } from "@/lib/systems/oraculum/oracle";
 import { ORACULUM_BACKGROUND } from "@/lib/systems/oraculum/lore";
@@ -127,7 +127,15 @@ export function baziContext(r: BaziResult, today?: Date): string {
     `ธาตุประจำตัว: ${el(r.dayMaster.stem.element)} · ดวง${r.strong ? "แข็ง" : "อ่อน"}`,
     `ธาตุที่ส่งเสริม: ${r.favorable.map(el).join(" ")} · ธาตุที่ควรเลี่ยง: ${r.unfavorable.map(el).join(" ")}`,
     ...(current ? [`ช่วงชีวิต 10 ปีปัจจุบัน: ${current.startYear}–${current.endYear} (${current.favorable ? "ช่วงขาขึ้น" : "ช่วงต้องอดทน"})`] : []),
-    ...(today ? [`วันนี้: ${thaiDate(today)}`, annualContext(annualBazi(r, today))] : []),
+    ...(r.luck ? [`ช่วงชีวิต 10 ปีทั้งหมด (ค.ศ.): ${r.luck.map((l) => `${l.startYear}–${l.endYear} ${l.favorable ? "ขาขึ้น" : "ต้องอดทน"}`).join(" → ")}`] : []),
+    ...(today
+      ? [
+          `วันนี้: ${thaiDate(today)}`,
+          annualContext(annualBazi(r, today)),
+          annualContext(annualBazi(r, yearsAhead(today, 1)), "ดวงปีหน้า"),
+          annualContext(annualBazi(r, yearsAhead(today, 2)), "ดวงอีก 2 ปีข้างหน้า"),
+        ]
+      : []),
     readingsText(interpretBazi(r, today)),
   ].join("\n");
 }
