@@ -35,7 +35,7 @@ export const SYSTEMS: SystemInfo[] = [
     href: "/thai-seven",
     accent: "blue",
     art: "cat-thai-seven",
-    artAlt: "ลายเส้นทองรูปเลขโรมัน VII ในวงโคจรที่มีดาวประดับ บนพื้นน้ำเงินเข้ม",
+    artAlt: "ลายเส้นทองรูปเลขโรมัน VII ในวงโคจรของดาว 7 ดวง บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "zodiac",
