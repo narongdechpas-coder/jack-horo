@@ -5,7 +5,8 @@ import "@fontsource/noto-sans-thai/700.css";
 import "./globals.css";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
-import { THEME_INIT_SCRIPT } from "@/components/site/ThemeToggle";
+import { SplashScreen } from "@/components/site/SplashScreen";
+import { SPLASH_INIT_SCRIPT, THEME_INIT_SCRIPT } from "@/components/site/init-scripts";
 
 export const metadata: Metadata = {
   title: "Horoscope Hub",
@@ -24,9 +25,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // data-theme is set before paint by THEME_INIT_SCRIPT, so React must not complain about it
     <html lang="th" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT + SPLASH_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-screen flex-col font-sans antialiased">
+        <SplashScreen />
         <SiteHeader />
         <main id="main" className="flex-1">
           {children}
