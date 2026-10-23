@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { isFutureDate, useToday } from "@/lib/date";
 import { calculateSeven, sumLevel, type SevenResult } from "@/lib/systems/thai-seven/calculate";
 import { interpretSeven } from "@/lib/systems/thai-seven/story";
 import { ReadingList } from "@/components/ReadingList";
@@ -14,6 +15,7 @@ function compute(date: string | null, time: string | null): { result?: SevenResu
   if (!date) return {};
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!m) return { error: "รูปแบบวันที่ไม่ถูกต้อง" };
+  if (isFutureDate(date)) return { error: "วันเกิดต้องไม่เกินวันนี้" };
   try {
     return { result: calculateSeven({ year: +m[1], month: +m[2], day: +m[3], time: time || undefined }) };
   } catch (e) {
@@ -23,6 +25,7 @@ function compute(date: string | null, time: string | null): { result?: SevenResu
 
 export function ThaiSevenClient() {
   const params = useSearchParams();
+  const today = useToday();
   const router = useRouter();
   const pathname = usePathname();
   const qDate = params.get("d");
@@ -55,7 +58,7 @@ export function ThaiSevenClient() {
             type="date"
             required
             min="1900-01-01"
-            max="2100-12-31"
+            max={today}
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2"

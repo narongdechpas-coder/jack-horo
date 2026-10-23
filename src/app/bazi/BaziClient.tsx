@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { isFutureDate, useToday } from "@/lib/date";
 import { calculateBazi, type BaziResult, type Gender } from "@/lib/systems/bazi/calculate";
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import { ELEMENT_INFO, TEN_GODS } from "@/lib/systems/bazi/names";
@@ -16,6 +17,7 @@ function compute(date: string | null, time: string | null, gender: string | null
   if (!date) return {};
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!m) return { error: "รูปแบบวันที่ไม่ถูกต้อง" };
+  if (isFutureDate(date)) return { error: "วันเกิดต้องไม่เกินวันนี้" };
   const g = gender === "male" || gender === "female" ? (gender as Gender) : undefined;
   try {
     return { result: calculateBazi({ year: +m[1], month: +m[2], day: +m[3], time: time || undefined, gender: g }) };
@@ -26,6 +28,7 @@ function compute(date: string | null, time: string | null, gender: string | null
 
 export function BaziClient() {
   const params = useSearchParams();
+  const today = useToday();
   const router = useRouter();
   const pathname = usePathname();
   const qDate = params.get("d");
@@ -59,7 +62,7 @@ export function BaziClient() {
       <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
         <label className="flex flex-col gap-1 text-sm">
           วันเกิด
-          <input type="date" required min="1900-01-01" max="2100-12-31" value={date} onChange={(e) => setDate(e.target.value)} className={input} />
+          <input type="date" required min="1900-01-01" max={today} value={date} onChange={(e) => setDate(e.target.value)} className={input} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           เวลาเกิด (ไม่บังคับ)
