@@ -196,17 +196,6 @@ body {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon-purple) 45%, transparent), 0 12px 40px -16px var(--glow);
 }
 
-/* Form panels on a system page glow in that system's colour (--sys-neon is set by systemStyle()) */
-.sys-panel {
-  border-color: color-mix(in srgb, var(--sys-neon, var(--neon-purple)) 55%, var(--border));
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--sys-neon, var(--neon-purple)) 18%, transparent),
-    0 16px 44px -20px var(--sys-neon, var(--neon-purple));
-}
-.sys-option:hover {
-  border-color: var(--sys-neon, var(--neon-purple));
-}
-
 /* "ถามหมอดูต่อ" call to action: rotating neon border and a soft breathing glow */
 @property --ai-angle {
   syntax: "<angle>";

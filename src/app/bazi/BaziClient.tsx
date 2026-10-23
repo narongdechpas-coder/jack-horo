@@ -54,7 +54,7 @@ export function BaziClient() {
   return (
     <div className="space-y-8">
 
-      <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 sys-panel">
+      <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
         <label className="flex flex-col gap-1 text-sm">
           วันเกิด
           <input type="date" required min="1900-01-01" max={today} value={date} onChange={(e) => setDate(e.target.value)} className={input} />

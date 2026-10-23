@@ -1,12 +1,6 @@
 import { ArtImage } from "@/components/site/Art";
 import { ORIGIN_LABELS, SYSTEMS } from "@/lib/systems/registry";
 
-/** ตั้งสีประจำศาสตร์ (--sys-neon) ให้ทั้งหน้า กล่องที่ใช้ .sys-panel จะเรืองแสงสีนี้ */
-export function systemStyle(id: string): React.CSSProperties {
-  const s = SYSTEMS.find((x) => x.id === id)!;
-  return { "--sys-neon": `var(--neon-${s.accent})` } as React.CSSProperties;
-}
-
 interface Props {
   /** id ใน SYSTEMS (registry.ts) */
   id: string;
