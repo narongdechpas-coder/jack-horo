@@ -13,6 +13,10 @@ import type { SpreadReading } from "@/lib/systems/playing-cards/spreads";
 import type { TarotReading } from "@/lib/systems/tarot/spreads";
 import type { SevenResult } from "@/lib/systems/thai-seven/calculate";
 import { interpretSeven } from "@/lib/systems/thai-seven/story";
+import { sumLevel } from "@/lib/systems/thai-seven/calculate";
+import { PLANET_LORE, READING_PRINCIPLES, YEAR_ROLE_TEXT } from "@/lib/systems/thai-seven/lore";
+import { sevenTaksa } from "@/lib/systems/thai-seven/mahataksa";
+import { PLANET_NAMES, thaiDate, type Planet } from "@/lib/systems/daily/taksa";
 
 const TONE_TH = { good: "ดี", neutral: "กลาง ๆ", caution: "ระวัง" } as const;
 
@@ -77,12 +81,36 @@ export function oracleContext(r: OracleReading): string {
   ].join("\n");
 }
 
-export function sevenContext(r: SevenResult): string {
-  return [
+const planetLoreText = (p: Planet) => {
+  const l = PLANET_LORE[p];
+  return `พระ${PLANET_NAMES[p]} (${l.kind}) ดูแล: ${l.rules} | ภาพรวมช่วงนี้: ${l.period} | งาน: ${l.work} | เงิน: ${l.money} | ความรัก: ${l.love} | สุขภาพ: ${l.health} | คำแนะนำ: ${l.advice}`;
+};
+
+export function sevenContext(r: SevenResult, today?: Date): string {
+  const chart = r.rows.map(
+    (row, i) => `แถว ${i + 1}: ` + row.map((c) => `${c.house}${c.negative ? "(ร้าย)" : ""}=${c.value} ${PLANET_NAMES[c.value as Planet]} [${c.meaning}]`).join(" · "),
+  );
+  const lines = [
     `วิธีดู: เลข 7 ตัว (โหราศาสตร์ไทย) จากวันเกิด`,
     `เกิดวัน${r.dayName} ${r.lunar.phase} ${r.lunar.kham} ค่ำ ${r.monthName} ปี${r.lunar.naksatrName}`,
-    readingsText(interpretSeven(r)),
-  ].join("\n");
+    "ตารางดวง (ภพ=เลขดาว):",
+    ...chart,
+    `ผลรวมแต่ละหลัก: ${r.sums.map((s, c) => `หลัก ${c + 1} (${r.rows[0][c].house}/${r.rows[1][c].house}/${r.rows[2][c].house}) = ${s} กำลัง${sumLevel(s)}`).join(" · ")}`,
+  ];
+  if (today) {
+    const t = sevenTaksa(r, today);
+    const role = YEAR_ROLE_TEXT[t.role];
+    lines.push(
+      `วันนี้: ${thaiDate(today)} · อายุ ${t.age} ปี`,
+      `มหาทักษา (ดาวเสวยอายุ ตามตำราพรหมชาติ): ตอนนี้พระ${t.current.name}เสวยอายุ ช่วงอายุ ${t.current.startAge}–${t.current.endAge} ปี (พ.ศ. ${t.current.startYear}–${t.current.endYear}) เหลืออีก ${t.yearsLeft} ปี` +
+        ` · เป็นภูมิ${t.role}ในทักษาของเจ้าชะตา = ${role.title}: ${role.story}`,
+      `ดาวที่เสวยอยู่: ${planetLoreText(t.current.planet)}`,
+      `ช่วงถัดไป: พระ${t.next.name} อายุ ${t.next.startAge}–${t.next.endAge} ปี (พ.ศ. ${t.next.startYear}–${t.next.endYear}) ภูมิ${t.nextRole} = ${YEAR_ROLE_TEXT[t.nextRole].title}`,
+      `ลำดับช่วงชีวิตทั้งหมด: ${t.periods.map((p) => `${p.name} ${p.startAge}–${p.endAge}`).join(" → ")}`,
+    );
+  }
+  lines.push("หลักการอ่าน (คลังความรู้ของเว็บ):", ...READING_PRINCIPLES.map((p) => `- ${p}`), "คำทำนายจากเว็บ:", readingsText(interpretSeven(r, today)));
+  return lines.join("\n");
 }
 
 export function baziContext(r: BaziResult): string {

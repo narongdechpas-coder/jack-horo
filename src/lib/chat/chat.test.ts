@@ -37,6 +37,15 @@ describe("reading contexts", () => {
     expect(playingCardsContext(readSpread("three", 5), "")).toContain("คำแนะนำ:");
   });
 
+  it("gives the AI the full seven-number chart and the current life period", () => {
+    const text = sevenContext(calculateSeven({ year: 1990, month: 8, day: 15, time: "19:30" }), new Date(2026, 9, 23));
+    expect(text).toContain("แถว 1: อัตตะ=");
+    expect(text).toContain("มหาทักษา");
+    expect(text).toContain("อายุ 36 ปี");
+    expect(text).not.toMatch(/undefined|NaN/);
+    expect(text.length).toBeLessThan(LIMITS.contextChars);
+  });
+
   it("keeps the longest Celtic Cross with a long question within the limit", () => {
     let longest = 0;
     for (let seed = 0; seed < 300; seed++) {

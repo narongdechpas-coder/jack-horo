@@ -8,6 +8,8 @@ import { interpretSeven } from "@/lib/systems/thai-seven/story";
 import { ReadingList } from "@/components/ReadingList";
 import { FortuneChat } from "@/components/FortuneChat";
 import { sevenContext } from "@/lib/chat/context";
+import { sevenTaksa } from "@/lib/systems/thai-seven/mahataksa";
+import { YEAR_ROLE_TEXT } from "@/lib/systems/thai-seven/lore";
 
 const LEVEL_STYLE = { สูง: "text-emerald-600", กลาง: "text-[var(--muted)]", ต่ำ: "text-rose-500" } as const;
 
@@ -33,6 +35,12 @@ export function ThaiSevenClient() {
   const [date, setDate] = useState(qDate ?? "");
   const [time, setTime] = useState(qTime ?? "");
   const { result, error } = useMemo(() => compute(qDate, qTime), [qDate, qTime]);
+  // วันนี้รู้ได้หลังเปิดหน้าในเบราว์เซอร์เท่านั้น (เว็บเป็น static)
+  const todayDate = useMemo(() => {
+    const m = today && /^(\d{4})-(\d{2})-(\d{2})$/.exec(today);
+    return m ? new Date(+m[1], +m[2] - 1, +m[3]) : undefined;
+  }, [today]);
+  const taksa = result && todayDate ? sevenTaksa(result, todayDate) : null;
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -90,13 +98,36 @@ export function ThaiSevenClient() {
                 <span className="text-sm text-[var(--muted)]"> (เกิดก่อน 06:00 จึงนับเป็นวันก่อนหน้า)</span>
               )}
             </p>
-            <ReadingList items={interpretSeven(result)} />
+            <ReadingList items={interpretSeven(result, todayDate)} />
           </section>
+          {taksa && (
+            <section className="panel space-y-3 rounded-xl p-4" data-testid="taksa-timeline">
+              <h3 className="font-semibold text-[var(--accent-text)]">เส้นทางชีวิตตามมหาทักษา</h3>
+              <p className="text-sm text-[var(--muted)]">
+                ตำราพรหมชาติแบ่งชีวิตเป็น 8 ช่วง แต่ละช่วงมีพระเคราะห์องค์หนึ่งดูแล ตอนนี้คุณอายุ {taksa.age} ปี
+              </p>
+              <ol className="flex flex-wrap gap-2">
+                {taksa.periods.map((p) => {
+                  const now = p.startAge === taksa.current.startAge;
+                  return (
+                    <li
+                      key={p.startAge}
+                      aria-current={now ? "step" : undefined}
+                      className={`rounded-lg px-3 py-1.5 text-sm ${now ? "bg-[var(--accent)] font-semibold text-[var(--on-accent)]" : "border border-[var(--border)]"}`}
+                    >
+                      {p.name} <span className={now ? "" : "text-[var(--muted)]"}>{p.startAge}–{p.endAge} ปี</span>
+                      {now && <span> · {YEAR_ROLE_TEXT[taksa.role].title}</span>}
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          )}
           <FortuneChat
             key={`${qDate}-${qTime}`}
             systemName="เลข 7 ตัว"
-            context={sevenContext(result)}
-            suggestions={["สรุปดวงของฉันให้สั้น ๆ", "ปีนี้ควรระวังเรื่องอะไร", "งานแบบไหนเหมาะกับฉัน"]}
+            context={sevenContext(result, todayDate)}
+            suggestions={["ปีนี้ดวงเป็นยังไง", "ช่วงชีวิตตอนนี้ควรระวังอะไร", "งานแบบไหนเหมาะกับฉัน"]}
           />
           <details className="rounded-xl border border-[var(--border)] p-4">
             <summary className="cursor-pointer font-semibold">ดูตารางเลข 7 ตัว (สำหรับผู้สนใจโหราศาสตร์)</summary>

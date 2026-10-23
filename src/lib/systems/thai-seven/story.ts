@@ -2,6 +2,8 @@
 // ตัวเลขในตาราง (ดาว 1–7 ในภพ และผลรวมของหลัก) ถูกแปลงเป็นเรื่องเล่าตามตารางข้อความด้านล่าง
 
 import { sumLevel, type Level, type SevenResult } from "./calculate";
+import { PLANET_LORE, YEAR_ROLE_TEXT } from "./lore";
+import { sevenTaksa } from "./mahataksa";
 import { DAY_NAMES } from "./meanings";
 
 export interface Reading {
@@ -112,8 +114,24 @@ const DAY_COLORS = ["", "แดง", "เหลือง", "ชมพู", "เ�
 const levelOf = (r: SevenResult, cols: number[]) =>
   sumLevel(Math.round(cols.reduce((s, c) => s + r.sums[c], 0) / cols.length));
 
-/** สร้างคำทำนายแบบเล่าเรื่องจากผลคำนวณ (ไม่ใช้ AI) */
-export function interpretSeven(r: SevenResult): Reading[] {
+/** ช่วงชีวิตตอนนี้ตามมหาทักษา เล่าแบบไม่ใช้ศัพท์โหราศาสตร์ */
+function lifePeriod(r: SevenResult, today: Date): Reading {
+  const t = sevenTaksa(r, today);
+  const role = YEAR_ROLE_TEXT[t.role];
+  const lore = PLANET_LORE[t.current.planet];
+  const next = YEAR_ROLE_TEXT[t.nextRole];
+  return {
+    heading: "ช่วงชีวิตตอนนี้",
+    body:
+      `ตามตำรามหาทักษา ช่วงอายุ ${t.current.startAge}–${t.current.endAge} ปี (พ.ศ. ${t.current.startYear}–${t.current.endYear}) ` +
+      `เป็นช่วงของพระ${t.current.name} สำหรับคุณถือเป็น${role.title} ${lore.period} ${role.story} ` +
+      `อีกประมาณ ${t.yearsLeft} ปีจะเข้าสู่ช่วงของพระ${t.next.name} ซึ่งเป็น${next.title}`,
+    advice: `${role.advice} และ${lore.advice}`,
+  };
+}
+
+/** สร้างคำทำนายแบบเล่าเรื่องจากผลคำนวณ (ไม่ใช้ AI) ถ้าส่ง today มาจะมีช่วงชีวิตตอนนี้ด้วย */
+export function interpretSeven(r: SevenResult, today?: Date): Reading[] {
   const cell = (row: number, col: number) => r.rows[row][col].value;
   const day = r.isRahu ? "พุธกลางคืน" : DAY_NAMES[r.dayNumber];
   const color = r.isRahu ? "เทาหรือดำ" : DAY_COLORS[r.dayNumber];
@@ -139,5 +157,6 @@ export function interpretSeven(r: SevenResult): Reading[] {
         `ส่วนเรื่อง${LIFE_AREAS[weakest]}เป็นเรื่องที่ต้องลงแรงมากกว่าคนอื่นสักหน่อย`,
       advice: `ใช้จุดแข็งเรื่อง${LIFE_AREAS[best]}ช่วยประคองเรื่อง${LIFE_AREAS[weakest]} และให้เวลากับเรื่องนี้อย่างสม่ำเสมอ`,
     },
+    ...(today ? [lifePeriod(r, today)] : []),
   ];
 }
