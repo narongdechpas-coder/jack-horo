@@ -45,12 +45,6 @@ export function TarotClient() {
 
   return (
     <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-2xl font-semibold">ไพ่ยิปซี (Tarot)</h1>
-        <p className="text-[var(--muted)]">
-          สำรับ Rider-Waite 78 ใบ ทำสมาธิถึงเรื่องที่อยากรู้ กดสับไพ่ แล้วเลือกไพ่ที่คว่ำอยู่ด้วยตัวเอง ไพ่กลับหัวจะมีความหมายต่างจากไพ่ตั้ง
-        </p>
-      </section>
 
       {!reading && (
         <CardDrawFlow

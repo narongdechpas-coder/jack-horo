@@ -59,11 +59,6 @@ export function OraculumClient() {
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
-      <section className="space-y-2 text-center">
-        <div className="text-xs tracking-[0.4em] text-[var(--gold)]">ORACULUM</div>
-        <h1 className="text-2xl font-semibold">ตำราพยากรณ์นโปเลียน</h1>
-        <p className="text-[var(--muted)]">✦ ✦ ✦</p>
-      </section>
 
       {reading ? (
         <section className="animate-card-in space-y-5">

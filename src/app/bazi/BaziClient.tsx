@@ -53,13 +53,6 @@ export function BaziClient() {
 
   return (
     <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-2xl font-semibold">ปาจื้อ (Bazi) สี่เสาดวงชะตา</h1>
-        <p className="text-[var(--muted)]">
-          วางดวงจีนจากปี เดือน วัน และชั่วโมงเกิด ดูธาตุประจำตัว สมดุลธาตุทั้งห้า ธาตุที่ส่งเสริม และวัยจรทุก 10 ปี
-          ใส่เวลาเกิดตามนาฬิกาไทย ถ้าไม่รู้เวลาจะไม่มีเสาชั่วโมง ส่วนเพศใช้คำนวณทิศทางของวัยจร
-        </p>
-      </section>
 
       <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
         <label className="flex flex-col gap-1 text-sm">

@@ -48,13 +48,6 @@ export function ThaiSevenClient() {
 
   return (
     <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-xl sm:text-2xl font-semibold">เลข 7 ตัว</h1>
-        <p className="text-[var(--muted)]">
-          ใส่วันเกิดเพื่อวางดวงเลข 7 ตัว 4 ฐาน ระบบจะแปลงเป็นวันทางจันทรคติไทยให้เอง ถ้ารู้เวลาเกิดให้ใส่ด้วย
-          เพราะถ้าเกิดก่อน 06:00 จะนับเป็นวันก่อนหน้า และถ้าเกิดวันพุธหลัง 18:00 จะนับเป็นพุธกลางคืน (ราหู)
-        </p>
-      </section>
 
       <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
         <label className="flex flex-col gap-1 text-sm">

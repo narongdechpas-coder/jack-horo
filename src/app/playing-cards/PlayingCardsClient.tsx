@@ -43,13 +43,6 @@ export function PlayingCardsClient() {
 
   return (
     <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-2xl font-semibold">ไพ่ป๊อก</h1>
-        <p className="text-[var(--muted)]">
-          ตั้งจิตถึงเรื่องที่อยากรู้ กดสับไพ่ แล้วเลือกไพ่ด้วยตัวเอง ไพ่แต่ละดอกมีความหมายต่างกัน:{" "}
-          {Object.values(SUITS).map((s) => `${s.symbol} ${s.theme}`).join(" · ")}
-        </p>
-      </section>
 
       {!reading && (
         <CardDrawFlow
