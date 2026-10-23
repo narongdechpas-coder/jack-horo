@@ -28,6 +28,22 @@ describe("reading contexts", () => {
     expect(text).not.toMatch(/undefined|null|NaN|\[object/);
     expect(text.length).toBeLessThan(LIMITS.contextChars);
   });
+
+  it("feeds the knowledge base and card combinations to the AI", () => {
+    const text = tarotContext(readTarot("three", 11, null), "แฟนจะกลับมาไหม");
+    expect(text).toContain("หัวข้อที่น่าจะถาม (เดาจากคำถาม): ความรัก");
+    expect(text).toContain("ตำรา Waite 1910:");
+    expect(text).toContain("ไพ่ที่อ่านร่วมกัน");
+    expect(playingCardsContext(readSpread("three", 5), "")).toContain("คำแนะนำ:");
+  });
+
+  it("keeps the longest Celtic Cross with a long question within the limit", () => {
+    let longest = 0;
+    for (let seed = 0; seed < 300; seed++) {
+      longest = Math.max(longest, tarotContext(readTarot("celtic", seed, null), "ก".repeat(200)).length);
+    }
+    expect(longest).toBeLessThan(LIMITS.contextChars);
+  });
 });
 
 describe("parseChatRequest", () => {

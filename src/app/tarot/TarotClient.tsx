@@ -5,6 +5,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { parsePicks } from "@/lib/random";
 import { TAROT_DECK, TAROT_SUITS } from "@/lib/systems/tarot/deck";
 import { TAROT_SPREADS, getTarotSpread, readTarot } from "@/lib/systems/tarot/spreads";
+import { TAROT_LORE } from "@/lib/systems/tarot/lore";
+import { TOPIC_LABEL, detectTopic } from "@/lib/systems/reading-kb";
+import { ComboList } from "@/components/ComboList";
 import { CardDrawFlow, type DrawResult } from "@/components/CardDrawFlow";
 import { TarotCard } from "@/components/TarotCard";
 import { CelticCross } from "./CelticCross";
@@ -38,6 +41,7 @@ export function TarotClient() {
   }
 
   const isCeltic = reading?.spread.id === "celtic";
+  const topic = reading?.spread.id === "love" ? "love" : detectTopic(qQuestion);
 
   return (
     <div className="space-y-8">
@@ -93,11 +97,28 @@ export function TarotClient() {
                     {card.nameEn}
                     {card.suit && ` · ธาตุ${TAROT_SUITS[card.suit].element}`} · {card.keyword}
                   </div>
+                  <p className="text-xs italic text-[var(--muted)]">ภาพบนไพ่: {TAROT_LORE[card.id].scene}</p>
                   <p className="text-sm leading-relaxed">{reversed ? card.reversed : card.upright}</p>
+                  {topic !== "general" && (
+                    <p className="text-sm leading-relaxed">
+                      <span className="font-semibold">ด้าน{TOPIC_LABEL[topic]}:</span> {TAROT_LORE[card.id][topic]}
+                    </p>
+                  )}
+                  <details className="text-sm">
+                    <summary className="cursor-pointer py-1 text-[var(--accent-text)]">อ่านเพิ่มจากตำรา</summary>
+                    <dl className="mt-1 space-y-1 leading-relaxed">
+                      <div><dt className="inline font-semibold">ตำรา Waite (1910): </dt><dd className="inline">{TAROT_LORE[card.id].waite}</dd></div>
+                      {topic !== "love" && <div><dt className="inline font-semibold">ความรัก: </dt><dd className="inline">{TAROT_LORE[card.id].love}</dd></div>}
+                      {topic !== "work" && <div><dt className="inline font-semibold">การงานและการเงิน: </dt><dd className="inline">{TAROT_LORE[card.id].work}</dd></div>}
+                      <div><dt className="inline font-semibold">คำแนะนำ: </dt><dd className="inline">{TAROT_LORE[card.id].advice}</dd></div>
+                    </dl>
+                  </details>
                 </div>
               </div>
             ))}
           </div>
+
+          <ComboList combos={reading.combos} />
 
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
             <h3 className="font-semibold text-[var(--accent-text)]">สรุปคำทำนาย</h3>
@@ -111,7 +132,7 @@ export function TarotClient() {
             key={`${qSpread}-${qSeed}-${qPick}`}
             systemName="ไพ่ยิปซี"
             context={tarotContext(reading, qQuestion)}
-            suggestions={["สรุปไพ่ทั้งหมดให้เข้าใจง่าย ๆ", "ไพ่บอกว่าควรทำอะไรต่อ", "ไพ่ใบไหนสำคัญที่สุด"]}
+            suggestions={["เล่าไพ่ทั้งหมดเป็นเรื่องเดียวให้ฟังหน่อย", "ไพ่ที่ออกมาด้วยกันส่งผลต่อกันยังไง", "ไพ่บอกว่าควรทำอะไรต่อ"]}
           />
           <p className="text-xs text-[var(--muted)]">คัดลอกลิงก์ของหน้านี้ไปแชร์ได้ คนที่เปิดลิงก์จะเห็นไพ่ชุดเดียวกับคุณ</p>
           <button type="button" onClick={() => router.push(pathname)} className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold">

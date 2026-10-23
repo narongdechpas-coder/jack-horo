@@ -53,7 +53,8 @@ describe("readTarot", () => {
   it.each(TAROT_SPREADS.map((s) => [s.id, s.positions.length] as const))("%s fills %i positions", (id, n) => {
     const r = readTarot(id, 7);
     expect(r.cards).toHaveLength(n);
-    expect(r.summary.at(-1)).toContain(r.spread.positions[r.spread.outcomeIndex].name);
+    expect(r.summary.at(-2)).toContain(r.spread.positions[r.spread.outcomeIndex].name);
+    expect(r.summary.at(-1)).toMatch(/^คำแนะนำจากไพ่: /);
   });
 
   it("falls back to the daily spread for unknown ids", () => {

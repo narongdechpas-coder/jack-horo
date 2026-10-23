@@ -5,6 +5,9 @@ import type { BaziResult } from "@/lib/systems/bazi/calculate";
 import { ELEMENT_INFO } from "@/lib/systems/bazi/names";
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import type { OracleReading } from "@/lib/systems/oraculum/oracle";
+import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
+import { TAROT_LORE } from "@/lib/systems/tarot/lore";
+import { SOURCE_LABEL, TOPIC_LABEL, detectTopic, type Combo, type Topic } from "@/lib/systems/reading-kb";
 import { SUITS } from "@/lib/systems/playing-cards/deck";
 import type { SpreadReading } from "@/lib/systems/playing-cards/spreads";
 import type { TarotReading } from "@/lib/systems/tarot/spreads";
@@ -15,18 +18,33 @@ const TONE_TH = { good: "ดี", neutral: "กลาง ๆ", caution: "ระ�
 
 const questionLine = (q: string) => `คำถามของผู้ใช้: ${q.trim() || "(ไม่ได้ระบุ ถามเรื่องทั่วไป)"}`;
 
+const topicLine = (t: Topic) => `หัวข้อที่น่าจะถาม (เดาจากคำถาม): ${TOPIC_LABEL[t]}`;
+
+const combosText = (combos: Combo[]) =>
+  combos.length
+    ? ["ไพ่ที่อ่านร่วมกัน (จากคลังความรู้ของเว็บ):", ...combos.map((c) => `- ${c.title}: ${c.text} [${SOURCE_LABEL[c.source]}]`)]
+    : ["ไพ่ที่อ่านร่วมกัน: ไม่มีกฎพิเศษ ให้เชื่อมความหมายตามตำแหน่ง"];
+
 const readingsText = (items: { heading: string; body: string; advice?: string }[]) =>
   items.map((r) => `${r.heading}: ${r.body}${r.advice ? ` (คำแนะนำ: ${r.advice})` : ""}`).join("\n");
 
 export function tarotContext(r: TarotReading, question: string): string {
+  const topic = r.spread.id === "love" ? "love" : detectTopic(question);
   return [
     questionLine(question),
+    topicLine(topic),
     `รูปแบบการเปิดไพ่: ${r.spread.name} (${r.cards.length} ใบ)`,
-    ...r.cards.map(
-      ({ position, card, reversed }, i) =>
+    ...r.cards.flatMap(({ position, card, reversed }, i) => {
+      const lore = TAROT_LORE[card.id];
+      return [
         `${i + 1}. ตำแหน่ง "${position.name}" (${position.hint}): ${card.nameTh} (${card.nameEn})` +
-        `${reversed ? " กลับหัว" : " ไพ่ตั้ง"} — ${card.keyword}: ${reversed ? card.reversed : card.upright}`,
-    ),
+          `${reversed ? " กลับหัว" : " ไพ่ตั้ง"} — ${card.keyword}: ${reversed ? card.reversed : card.upright}`,
+        `   ภาพบนไพ่: ${lore.scene}`,
+        `   ตำรา Waite 1910: ${lore.waite}`,
+        `   ความรัก: ${lore.love} | การงาน/การเงิน: ${lore.work} | คำแนะนำ: ${lore.advice}`,
+      ];
+    }),
+    ...combosText(r.combos),
     `สรุปจากเว็บ: ${r.summary.join(" ")}`,
   ].join("\n");
 }
@@ -34,12 +52,17 @@ export function tarotContext(r: TarotReading, question: string): string {
 export function playingCardsContext(r: SpreadReading, question: string): string {
   return [
     questionLine(question),
+    topicLine(detectTopic(question)),
     `รูปแบบการเปิดไพ่: ${r.spread.name} (${r.cards.length} ใบ)`,
-    ...r.cards.map(
-      ({ position, card }, i) =>
+    ...r.cards.flatMap(({ position, card }, i) => {
+      const lore = CARD_LORE[card.id];
+      return [
         `${i + 1}. ตำแหน่ง "${position}": ${card.rank} ${SUITS[card.suit].name} (โทน${TONE_TH[card.tone]}) — ${card.meaning}`,
-    ),
+        `   ความรัก: ${lore.love} | การงาน/การเงิน: ${lore.work} | คำแนะนำ: ${lore.advice}`,
+      ];
+    }),
     `ความหมายของดอก: ${Object.values(SUITS).map((s) => `${s.name} = ${s.theme}`).join(", ")}`,
+    ...combosText(r.combos),
     `สรุปจากเว็บ: ${r.summary}`,
   ].join("\n");
 }

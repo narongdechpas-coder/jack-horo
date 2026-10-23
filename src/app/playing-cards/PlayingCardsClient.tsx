@@ -9,6 +9,9 @@ import { CardDrawFlow, type DrawResult } from "@/components/CardDrawFlow";
 import { PlayingCard } from "@/components/PlayingCard";
 import { FortuneChat } from "@/components/FortuneChat";
 import { playingCardsContext } from "@/lib/chat/context";
+import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
+import { TOPIC_LABEL, detectTopic } from "@/lib/systems/reading-kb";
+import { ComboList } from "@/components/ComboList";
 
 const FLOW_SPREADS = SPREADS.map((s) => ({ id: s.id, name: s.name, description: s.description, positions: s.positions }));
 
@@ -29,6 +32,8 @@ export function PlayingCardsClient() {
     const picks = parsePicks(qPick, DECK.length, getSpread(qSpread).positions.length);
     return readSpread(qSpread, seed, picks);
   }, [qSpread, qSeed, qPick]);
+
+  const topic = detectTopic(qQuestion);
 
   function reveal({ spreadId, seed, picks, question }: DrawResult) {
     const q = new URLSearchParams({ s: spreadId, seed: String(seed), pick: picks.join(",") });
@@ -73,9 +78,23 @@ export function PlayingCardsClient() {
                   {card.rank} {SUITS[card.suit].name} · <span className="text-[var(--muted)]">{TONE_LABEL[card.tone]}</span>
                 </div>
                 <p className="text-sm leading-relaxed [text-wrap:balance]">{card.meaning}</p>
+                {topic !== "general" && (
+                  <p className="text-sm leading-relaxed [text-wrap:balance]">
+                    <span className="font-semibold">ด้าน{TOPIC_LABEL[topic]}:</span> {CARD_LORE[card.id][topic]}
+                  </p>
+                )}
+                <details className="w-full text-left text-sm">
+                  <summary className="cursor-pointer py-1 text-center text-[var(--accent-text)]">อ่านเพิ่ม</summary>
+                  <dl className="mt-1 space-y-1 leading-relaxed">
+                    {topic !== "love" && <div><dt className="inline font-semibold">ความรัก: </dt><dd className="inline">{CARD_LORE[card.id].love}</dd></div>}
+                    {topic !== "work" && <div><dt className="inline font-semibold">การงานและการเงิน: </dt><dd className="inline">{CARD_LORE[card.id].work}</dd></div>}
+                    <div><dt className="inline font-semibold">คำแนะนำ: </dt><dd className="inline">{CARD_LORE[card.id].advice}</dd></div>
+                  </dl>
+                </details>
               </div>
             ))}
           </div>
+          <ComboList combos={reading.combos} />
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
             <h3 className="font-semibold text-[var(--accent-text)]">สรุปคำทำนาย</h3>
             <p className="mt-1 leading-relaxed">{reading.summary}</p>
@@ -84,7 +103,7 @@ export function PlayingCardsClient() {
             key={`${qSpread}-${qSeed}-${qPick}`}
             systemName="ไพ่ป๊อก"
             context={playingCardsContext(reading, qQuestion)}
-            suggestions={["สรุปไพ่ทั้งหมดให้เข้าใจง่าย ๆ", "ไพ่บอกว่าควรทำอะไรต่อ", "มีเรื่องอะไรที่ต้องระวังไหม"]}
+            suggestions={["เล่าไพ่ทั้งหมดเป็นเรื่องเดียวให้ฟังหน่อย", "ไพ่ที่ออกมาด้วยกันส่งผลต่อกันยังไง", "มีเรื่องอะไรที่ต้องระวังไหม"]}
           />
           <p className="text-xs text-[var(--muted)]">คัดลอกลิงก์ของหน้านี้ไปแชร์ได้ คนที่เปิดลิงก์จะเห็นไพ่ชุดเดียวกับคุณ</p>
           <button type="button" onClick={() => router.push(pathname)} className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold">

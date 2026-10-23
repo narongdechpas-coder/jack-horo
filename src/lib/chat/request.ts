@@ -30,7 +30,7 @@ export function parseChatRequest(body: unknown): ChatRequest | { error: string }
     const expected = i % 2 === 0 ? "user" : "assistant";
     if (role !== expected) return { error: "ลำดับข้อความไม่ถูกต้อง" };
     if (typeof content !== "string" || content.trim().length === 0) return { error: "ข้อความว่าง" };
-    if (content.length > LIMITS.messageChars * (role === "assistant" ? 4 : 1)) return { error: "ข้อความยาวเกินไป" };
+    if (content.length > LIMITS.messageChars * (role === "assistant" ? 8 : 1)) return { error: "ข้อความยาวเกินไป" };
     clean.push({ role: expected, content });
   }
   if (clean.at(-1)!.role !== "user") return { error: "ข้อความสุดท้ายต้องเป็นคำถาม" };

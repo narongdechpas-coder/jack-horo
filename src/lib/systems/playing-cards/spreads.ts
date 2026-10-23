@@ -1,4 +1,7 @@
+import type { Combo } from "../reading-kb";
+import { findCardCombos } from "./combos";
 import { SUITS, type Card, type Suit } from "./deck";
+import { CARD_LORE } from "./lore";
 import { pickCards } from "./draw";
 
 export interface Spread {
@@ -31,6 +34,8 @@ export interface SpreadReading {
   spread: Spread;
   seed: number;
   cards: CardReading[];
+  /** ความหมายที่เกิดจากไพ่หลายใบอ่านร่วมกัน */
+  combos: Combo[];
   summary: string;
 }
 
@@ -68,5 +73,6 @@ export function readSpread(spreadId: string, seed: number, picks?: number[] | nu
           : "ไพ่อนาคตเป็นกลาง ยังเปลี่ยนแปลงได้ตามการกระทำของคุณ",
     );
   }
-  return { spread, seed, cards, summary: parts.join(" ") };
+  parts.push(`คำแนะนำ: ${CARD_LORE[drawn[drawn.length - 1].id].advice}`);
+  return { spread, seed, cards, combos: findCardCombos(drawn), summary: parts.join(" ") };
 }

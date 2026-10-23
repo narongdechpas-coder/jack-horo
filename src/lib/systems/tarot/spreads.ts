@@ -1,5 +1,8 @@
 import { drawFrom, mulberry32, shuffle } from "@/lib/random";
-import { TAROT_DECK, TAROT_SUITS, type TarotCard, type TarotSuit } from "./deck";
+import type { Combo } from "../reading-kb";
+import { findTarotCombos } from "./combos";
+import { TAROT_DECK, type TarotCard } from "./deck";
+import { TAROT_LORE } from "./lore";
 
 export interface Position {
   name: string;
@@ -81,6 +84,8 @@ export interface TarotReading {
   spread: TarotSpread;
   seed: number;
   cards: DrawnTarot[];
+  /** ความหมายที่เกิดจากไพ่หลายใบอ่านร่วมกัน */
+  combos: Combo[];
   summary: string[];
 }
 
@@ -107,28 +112,18 @@ export function readTarot(spreadId: string, seed: number, picks?: number[] | nul
   const spread = getTarotSpread(spreadId);
   const drawn = pickTarot(seed, spread.positions.length, picks);
   const cards = drawn.map((d, i) => ({ ...d, position: spread.positions[i] }));
-  return { spread, seed, cards, summary: summarize(spread, cards) };
+  return { spread, seed, cards, combos: findTarotCombos(spread, cards), summary: summarize(spread, cards) };
 }
 
 function summarize(spread: TarotSpread, cards: DrawnTarot[]): string[] {
   const n = cards.length;
   const lines: string[] = [];
 
-  const majors = cards.filter((c) => c.card.arcana === "major").length;
-  const reversed = cards.filter((c) => c.reversed).length;
-
+  // ไพ่ชุดเดียวกันออกมาก/ไพ่ใบใหญ่ อยู่ใน combos แล้ว ที่นี่สรุปเฉพาะภาพรวมและไพ่ผลลัพธ์
   if (n > 1) {
-    if (majors / n >= 0.5) lines.push(`ไพ่ใบใหญ่ออกมาถึง ${majors} ใบ เรื่องที่ถามเป็นจุดเปลี่ยนสำคัญที่จะส่งผลต่อชีวิตไปอีกนาน ให้ตัดสินใจอย่างตั้งใจ`);
-    else if (majors === 0) lines.push("เรื่องนี้อยู่ในมือคุณ ผลลัพธ์เปลี่ยนได้ด้วยสิ่งที่คุณทำในแต่ละวัน");
-
-    const counts = new Map<TarotSuit, number>();
-    for (const c of cards) if (c.card.suit) counts.set(c.card.suit, (counts.get(c.card.suit) ?? 0) + 1);
-    const top = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
-    if (top && top[1] >= 2 && top[1] / n >= 0.3) {
-      const s = TAROT_SUITS[top[0]];
-      lines.push(`ไพ่ชุด${s.nameTh}ออกมา ${top[1]} ใบ เรื่องที่เด่นในตอนนี้คือ${s.theme}`);
-    }
-
+    const majors = cards.filter((c) => c.card.arcana === "major").length;
+    const reversed = cards.filter((c) => c.reversed).length;
+    if (majors === 0) lines.push("ไม่มีไพ่ใบใหญ่เลย เรื่องนี้อยู่ในมือคุณ ผลลัพธ์เปลี่ยนได้ด้วยสิ่งที่คุณทำในแต่ละวัน");
     if (reversed / n > 0.5) lines.push("ไพ่กลับหัวออกมาเกินครึ่ง ช่วงนี้อะไร ๆ อาจยังติดขัด ลองถอยมาดูที่ตัวเองหรือรอจังหวะที่ดีกว่า");
     else if (reversed === 0) lines.push("ไพ่ตั้งทุกใบ ทุกอย่างพร้อมจะไหลไปข้างหน้า เป็นจังหวะที่ดีที่จะลงมือ");
   }
@@ -137,5 +132,6 @@ function summarize(spread: TarotSpread, cards: DrawnTarot[]): string[] {
   const name = `${outcome.card.nameTh}${outcome.reversed ? " (กลับหัว)" : ""}`;
   const meaning = outcome.reversed ? outcome.card.reversed : outcome.card.upright;
   lines.push(`ไพ่ตำแหน่ง “${outcome.position.name}” คือ ${name}: ${meaning}`);
+  lines.push(`คำแนะนำจากไพ่: ${TAROT_LORE[outcome.card.id].advice}`);
   return lines;
 }
