@@ -1,4 +1,5 @@
 import { QUESTIONS, SYMBOLS, TONES, type OracleSymbol } from "./data";
+import { QUESTION_TOPIC, SYMBOL_LORE, TONE_ANSWER, TOPIC_ANSWER, TOPIC_LABEL, type SymbolLore, type Topic } from "./lore";
 
 export const LINES = 5;
 
@@ -19,11 +20,19 @@ export interface OracleReading {
   symbol: OracleSymbol;
   toneLabel: string;
   guide: string;
+  /** หมวดของคำถาม และคำตอบที่ตรงกับคำถามตามโทนของสัญลักษณ์ */
+  topic: Topic;
+  topicLabel: string;
+  leaning: string;
+  answer: string;
+  lore: SymbolLore;
 }
 
 export function readOracle(questionIndex: number, counts: number[]): OracleReading {
-  const symbol = SYMBOLS[oracleIndex(counts)];
+  const index = oracleIndex(counts);
+  const symbol = SYMBOLS[index];
   const tone = TONES[symbol.tone];
+  const topic = QUESTION_TOPIC[questionIndex];
   return {
     question: QUESTIONS[questionIndex],
     counts,
@@ -31,6 +40,11 @@ export function readOracle(questionIndex: number, counts: number[]): OracleReadi
     symbol,
     toneLabel: tone.label,
     guide: tone.guide,
+    topic,
+    topicLabel: TOPIC_LABEL[topic],
+    leaning: TONE_ANSWER[symbol.tone],
+    answer: TOPIC_ANSWER[topic][symbol.tone],
+    lore: SYMBOL_LORE[index],
   };
 }
 

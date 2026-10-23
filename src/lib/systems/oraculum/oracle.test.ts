@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { QUESTIONS, SYMBOLS, TONES } from "./data";
 import { oracleIndex, parseOracleParams, readOracle } from "./oracle";
+import { QUESTION_TOPIC, SYMBOL_LORE, TOPIC_ANSWER } from "./lore";
 
 describe("data", () => {
   it("has 32 questions and 32 symbols, one per 5-line figure", () => {
@@ -48,5 +49,23 @@ describe("parseOracleParams", () => {
     ["4", "1,x,3,4,5"],
   ])("rejects q=%s c=%s", (q, c) => {
     expect(parseOracleParams(q, c)).toBeNull();
+  });
+});
+
+describe("oraculum knowledge base", () => {
+  it("covers every question and symbol", () => {
+    expect(QUESTION_TOPIC).toHaveLength(QUESTIONS.length);
+    expect(SYMBOL_LORE).toHaveLength(SYMBOLS.length);
+    for (const l of SYMBOL_LORE) for (const v of Object.values(l)) expect(v.length).toBeGreaterThan(5);
+  });
+
+  it("answers in the topic of the question", () => {
+    // 8 = "คนผู้นั้นรักและใส่ใจฉันจริงไหม", ขีดคี่ทุกแถว = สัญลักษณ์ลำดับ 31 (วงแหวนทอง, ฤกษ์ดี)
+    const r = readOracle(8, [1, 1, 1, 1, 1]);
+    expect(r.topic).toBe("love");
+    expect(r.symbol.name).toBe("วงแหวนทอง");
+    expect(r.answer).toBe(TOPIC_ANSWER.love.favorable);
+    expect(r.lore).toBe(SYMBOL_LORE[31]);
+    expect(readOracle(16, [1, 1, 1, 1, 1]).topic).toBe("money");
   });
 });

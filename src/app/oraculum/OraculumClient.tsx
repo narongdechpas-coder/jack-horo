@@ -90,6 +90,18 @@ export function OraculumClient() {
             <p className="mt-4 border-t border-[var(--border)] pt-4 text-sm text-[var(--muted)]">{reading.guide}</p>
           </div>
 
+          <div className="panel space-y-2 rounded-xl p-4" data-testid="oracle-answer">
+            <h3 className="font-semibold text-[var(--accent-text)]">คำตอบสำหรับคำถามของคุณ</h3>
+            <p className="text-sm text-[var(--muted)]">หมวด{reading.topicLabel} · {reading.leaning}</p>
+            <p className="leading-relaxed">{reading.answer}</p>
+            <p className="leading-relaxed">
+              <span className="font-semibold">ความหมายของ{reading.symbol.name}:</span> {reading.lore.meaning}
+            </p>
+            <p className="leading-relaxed">
+              <span className="font-semibold">💡 สิ่งที่ควรทำ:</span> {reading.lore.advice}
+            </p>
+          </div>
+
           <div className="flex gap-3">
             <button type="button" onClick={() => startDraw(parsed!.questionIndex)} className="flex-1 rounded-lg border border-[var(--accent)] px-4 py-3 text-[var(--accent-text)]">
               ↺ ขีดใหม่

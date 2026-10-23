@@ -6,6 +6,7 @@ import { ELEMENT_INFO } from "@/lib/systems/bazi/names";
 import { annualBazi, annualContext } from "@/lib/systems/bazi/annual";
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import type { OracleReading } from "@/lib/systems/oraculum/oracle";
+import { ORACULUM_BACKGROUND } from "@/lib/systems/oraculum/lore";
 import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
 import { TAROT_LORE } from "@/lib/systems/tarot/lore";
 import { SOURCE_LABEL, TOPIC_LABEL, detectTopic, type Combo, type Topic } from "@/lib/systems/reading-kb";
@@ -75,10 +76,14 @@ export function playingCardsContext(r: SpreadReading, question: string): string 
 export function oracleContext(r: OracleReading): string {
   return [
     questionLine(r.question),
-    `วิธีดู: ตำราพยากรณ์นโปเลียน ผู้ใช้ขีดเส้น 5 บรรทัด จำนวนขีดคี่/คู่ชี้ไปที่สัญลักษณ์ 1 ใน 32 แบบ`,
-    `สัญลักษณ์ที่ได้: ${r.symbol.name} (${r.toneLabel})`,
+    `หมวดของคำถาม: ${r.topicLabel}`,
+    `ที่มาของตำรา (คลังความรู้ของเว็บ): ${ORACULUM_BACKGROUND}`,
+    `สัญลักษณ์ที่ได้: ${r.symbol.name} (${r.toneLabel}) · คำสำคัญ: ${r.lore.keywords}`,
     `คำพยากรณ์: ${r.symbol.verse}`,
-    `คำแนะนำ: ${r.guide}`,
+    `ความหมายแบบเข้าใจง่าย: ${r.lore.meaning}`,
+    `แนวโน้มของคำตอบ: ${r.leaning}`,
+    `คำตอบสำหรับคำถามนี้: ${r.answer}`,
+    `คำแนะนำ: ${r.lore.advice} (${r.guide})`,
   ].join("\n");
 }
 
