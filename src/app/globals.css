@@ -1,37 +1,186 @@
 @import "tailwindcss";
 
+/* Theme switching uses data-theme on <html>; without it the OS setting decides.
+   Use the tokens below instead of Tailwind's dark: variant, which can't see the OS fallback. */
+
 @theme {
   --font-sans: "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
 }
 
-:root {
-  /* เขียวมะกอก + ครีมอุ่น */
-  --bg: #f6f4ec;
+/*
+ * Cosmic Neon design tokens (docs: Horoscope Hub — Cosmic Neon Design Standard).
+ * Every text/background pair is WCAG AA (≥ 4.5:1) in both themes:
+ *   --accent      button / chip FILL, always paired with --on-accent text
+ *   --accent-text purple used AS TEXT (links, headings, labels)
+ *   --neon-*      borders, glows and decoration only, never as body text
+ *   --cat-*       per-category accent, safe as text on surfaces
+ */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f5ff;
+  --bg-2: #eeebff;
   --surface: #ffffff;
-  --text: #26291d;
-  --muted: #656a57;
-  --accent: #5f6b2f;
+  --surface-2: #f1eeff;
+  --text: #0b1230;
+  --muted: #4a5578;
+  --border: #ddd6fe;
+  --accent: #7c3aed;
+  --accent-2: #be185d;
   --on-accent: #ffffff;
-  --gold: #946c1e;
-  --border: #e2dfd0;
+  --accent-text: #6d28d9;
+  --gold: #92400e;
+  --neon-purple: #a855f7;
+  --neon-magenta: #ec4899;
+  --neon-blue: #38bdf8;
+  --neon-cyan: #0891b2;
+  --neon-gold: #f59e0b;
+  --cat-blue: #0369a1;
+  --cat-magenta: #be185d;
+  --cat-purple: #6d28d9;
+  --cat-cyan: #0e7490;
+  --cat-gold: #92400e;
+  --tone-good: #047857;
+  --tone-neutral: #075985;
+  --tone-caution: #be123c;
+  --glow: rgb(124 58 237 / 0.18);
+  --page-bg:
+    radial-gradient(60rem 30rem at 85% -10%, rgb(168 85 247 / 0.12), transparent 70%),
+    radial-gradient(50rem 30rem at -10% 20%, rgb(56 189 248 / 0.1), transparent 70%),
+    var(--bg);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161812;
-    --surface: #1f221a;
-    --text: #eef0e4;
-    --muted: #a7ab96;
-    --accent: #b3c07a;
-    --on-accent: #1c2010;
-    --gold: #d9b45a;
-    --border: #33372a;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #050817;
+    --bg-2: #0b1230;
+    --surface: #101a3a;
+    --surface-2: #17234a;
+    --text: #f8fafc;
+    --muted: #b8c3dd;
+    --border: #29365f;
+    --accent: #9333ea;
+    --accent-2: #db2777;
+    --on-accent: #ffffff;
+    --accent-text: #c084fc;
+    --gold: #fbbf24;
+    --neon-purple: #a855f7;
+    --neon-magenta: #ec4899;
+    --neon-blue: #38bdf8;
+    --neon-cyan: #67e8f9;
+    --neon-gold: #fbbf24;
+    --cat-blue: #38bdf8;
+    --cat-magenta: #f472b6;
+    --cat-purple: #c084fc;
+    --cat-cyan: #67e8f9;
+    --cat-gold: #fbbf24;
+    --tone-good: #6ee7b7;
+    --tone-neutral: #7dd3fc;
+    --tone-caution: #fda4af;
+    --glow: rgb(168 85 247 / 0.35);
+    --page-bg:
+      radial-gradient(1px 1px at 12% 18%, rgb(255 255 255 / 0.7), transparent),
+      radial-gradient(1px 1px at 72% 8%, rgb(255 255 255 / 0.6), transparent),
+      radial-gradient(1.5px 1.5px at 38% 62%, rgb(255 255 255 / 0.5), transparent),
+      radial-gradient(1px 1px at 88% 44%, rgb(255 255 255 / 0.6), transparent),
+      radial-gradient(1px 1px at 22% 84%, rgb(255 255 255 / 0.4), transparent),
+      radial-gradient(60rem 30rem at 85% -10%, rgb(168 85 247 / 0.18), transparent 70%),
+      radial-gradient(50rem 30rem at -10% 30%, rgb(56 189 248 / 0.1), transparent 70%),
+      var(--bg);
   }
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #050817;
+  --bg-2: #0b1230;
+  --surface: #101a3a;
+  --surface-2: #17234a;
+  --text: #f8fafc;
+  --muted: #b8c3dd;
+  --border: #29365f;
+  --accent: #9333ea;
+  --accent-2: #db2777;
+  --on-accent: #ffffff;
+  --accent-text: #c084fc;
+  --gold: #fbbf24;
+  --neon-purple: #a855f7;
+  --neon-magenta: #ec4899;
+  --neon-blue: #38bdf8;
+  --neon-cyan: #67e8f9;
+  --neon-gold: #fbbf24;
+  --cat-blue: #38bdf8;
+  --cat-magenta: #f472b6;
+  --cat-purple: #c084fc;
+  --cat-cyan: #67e8f9;
+  --cat-gold: #fbbf24;
+  --tone-good: #6ee7b7;
+  --tone-neutral: #7dd3fc;
+  --tone-caution: #fda4af;
+  --glow: rgb(168 85 247 / 0.35);
+  --page-bg:
+    radial-gradient(1px 1px at 12% 18%, rgb(255 255 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 72% 8%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 38% 62%, rgb(255 255 255 / 0.5), transparent),
+    radial-gradient(1px 1px at 88% 44%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1px 1px at 22% 84%, rgb(255 255 255 / 0.4), transparent),
+    radial-gradient(60rem 30rem at 85% -10%, rgb(168 85 247 / 0.18), transparent 70%),
+    radial-gradient(50rem 30rem at -10% 30%, rgb(56 189 248 / 0.1), transparent 70%),
+    var(--bg);
+}
+
 body {
-  background: var(--bg);
+  background: var(--page-bg);
+  background-attachment: fixed;
   color: var(--text);
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  line-height: 1.3;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Primary call to action: purple → magenta with white text (≥ 4.6:1 at both ends, both themes) */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--on-accent);
+  box-shadow: 0 6px 24px -8px var(--glow);
+  transition: filter 0.15s, transform 0.15s;
+}
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Secondary call to action: outlined */
+.btn-secondary {
+  border: 1px solid color-mix(in srgb, var(--neon-purple) 60%, var(--border));
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+  transition: border-color 0.15s, background 0.15s;
+}
+.btn-secondary:hover {
+  border-color: var(--neon-purple);
+  background: var(--surface-2);
+}
+
+/* Panels: surface with a hairline border; .panel-glow adds the neon edge for featured blocks */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.panel-glow {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon-purple) 45%, transparent), 0 12px 40px -16px var(--glow);
 }
 
 /* Card shuffle: two halves of the deck slide apart and riffle back together */
@@ -54,16 +203,20 @@ body {
 .animate-riffle-left { animation: riffle-left 1.2s ease-in-out; }
 .animate-riffle-right { animation: riffle-right 1.2s ease-in-out; }
 .animate-card-in { animation: card-in 0.35s ease-out both; }
+html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   .animate-riffle-left, .animate-riffle-right, .animate-card-in { animation: none; }
+  html { scroll-behavior: auto; }
+  .btn-primary, .btn-secondary { transition: none; }
 }
 
-/* Face-down card back */
+/* Face-down card back: midnight navy with a gold star and fine geometry */
 .card-back {
   background:
-    radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.35) 0 18%, transparent 19%),
-    repeating-linear-gradient(45deg, rgb(255 255 255 / 0.12) 0 4px, transparent 4px 8px),
-    linear-gradient(160deg, #4f5a26, #363e18);
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #363e18, 0 1px 3px rgb(0 0 0 / 0.25);
+    radial-gradient(circle at 50% 50%, rgb(251 191 36 / 0.9) 0 6%, rgb(168 85 247 / 0.5) 7% 14%, transparent 15%),
+    radial-gradient(circle at 50% 50%, transparent 0 26%, rgb(168 85 247 / 0.5) 27% 28%, transparent 29%),
+    repeating-linear-gradient(45deg, rgb(56 189 248 / 0.12) 0 2px, transparent 2px 9px),
+    linear-gradient(160deg, #17234a, #0b1230);
+  border: 2px solid #c084fc;
+  box-shadow: 0 0 0 1px #0b1230, 0 2px 6px rgb(0 0 0 / 0.35);
 }

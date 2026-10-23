@@ -70,7 +70,7 @@ export function CardDrawFlow({
             <label
               key={s.id}
               className={`cursor-pointer rounded-lg border px-3 py-2 text-sm ${
-                spreadId === s.id ? "border-[var(--accent)] text-[var(--accent)]" : "border-[var(--border)]"
+                spreadId === s.id ? "border-[var(--accent)] text-[var(--accent-text)]" : "border-[var(--border)]"
               }`}
             >
               <input type="radio" name="spread" value={s.id} checked={spreadId === s.id} onChange={() => setSpreadId(s.id)} className="sr-only" />
@@ -88,7 +88,7 @@ export function CardDrawFlow({
           onChange={(e) => setQuestion(e.target.value)}
           className="w-full rounded-lg border border-[var(--border)] bg-transparent px-3 py-2"
         />
-        <button type="button" onClick={shuffleDeck} className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)]">
+        <button type="button" onClick={shuffleDeck} className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold">
           🔀 สับไพ่
         </button>
       </div>
@@ -166,7 +166,7 @@ export function CardDrawFlow({
           type="button"
           disabled={!done}
           onClick={() => onReveal({ spreadId, seed, picks, question: question.trim() })}
-          className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)] disabled:opacity-40"
+          className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold disabled:opacity-40"
         >
           ✨ เปิดไพ่
         </button>

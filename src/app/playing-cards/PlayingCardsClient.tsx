@@ -76,7 +76,7 @@ export function PlayingCardsClient() {
             ))}
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
-            <h3 className="font-semibold text-[var(--accent)]">สรุปคำทำนาย</h3>
+            <h3 className="font-semibold text-[var(--accent-text)]">สรุปคำทำนาย</h3>
             <p className="mt-1 leading-relaxed">{reading.summary}</p>
           </div>
           <FortuneChat
@@ -86,7 +86,7 @@ export function PlayingCardsClient() {
             suggestions={["สรุปไพ่ทั้งหมดให้เข้าใจง่าย ๆ", "ไพ่บอกว่าควรทำอะไรต่อ", "มีเรื่องอะไรที่ต้องระวังไหม"]}
           />
           <p className="text-xs text-[var(--muted)]">คัดลอกลิงก์ของหน้านี้ไปแชร์ได้ คนที่เปิดลิงก์จะเห็นไพ่ชุดเดียวกับคุณ</p>
-          <button type="button" onClick={() => router.push(pathname)} className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)]">
+          <button type="button" onClick={() => router.push(pathname)} className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold">
             🔀 ดูดวงใหม่
           </button>
         </section>

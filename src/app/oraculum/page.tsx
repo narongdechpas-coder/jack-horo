@@ -5,8 +5,10 @@ export const metadata = { title: "ตำราพยากรณ์นโปเ�
 
 export default function Page() {
   return (
-    <Suspense>
-      <OraculumClient />
-    </Suspense>
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <Suspense>
+        <OraculumClient />
+      </Suspense>
+    </div>
   );
 }

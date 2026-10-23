@@ -79,7 +79,7 @@ export function FortuneChat({ systemName, context, suggestions }: Props) {
       >
         <span className="text-2xl" aria-hidden>🔮</span>
         <span>
-          <span className="block font-semibold text-[var(--accent)]">ถามหมอดูต่อ</span>
+          <span className="block font-semibold text-[var(--accent-text)]">ถามหมอดูต่อ</span>
           <span className="block text-sm text-[var(--muted)]">อ่านแล้วงง? ให้หมอดู AI อธิบายผลนี้ หรือถามเรื่องที่อยากรู้เพิ่ม</span>
         </span>
       </button>
@@ -89,7 +89,7 @@ export function FortuneChat({ systemName, context, suggestions }: Props) {
   return (
     <section className="space-y-3 rounded-xl border border-[var(--accent)] bg-[var(--surface)] p-4" data-testid="chat">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-[var(--accent)]">🔮 หมอดู AI</h3>
+        <h3 className="font-semibold text-[var(--accent-text)]">🔮 หมอดู AI</h3>
         {messages.length > 0 && !loading && (
           <button type="button" onClick={() => setMessages([])} className="text-sm text-[var(--muted)]">
             เริ่มใหม่
@@ -107,7 +107,7 @@ export function FortuneChat({ systemName, context, suggestions }: Props) {
               {m.content}
             </div>
           ) : (
-            <div key={i} className="mr-4 whitespace-pre-wrap rounded-lg bg-[var(--bg)] px-3 py-2 leading-relaxed" data-testid="chat-answer">
+            <div key={i} className="mr-4 whitespace-pre-wrap rounded-lg bg-[var(--surface-2)] px-3 py-2 leading-relaxed" data-testid="chat-answer">
               {m.content || <span className="text-[var(--muted)]">หมอดูกำลังพิจารณา…</span>}
             </div>
           ),
@@ -149,7 +149,7 @@ export function FortuneChat({ systemName, context, suggestions }: Props) {
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="rounded-lg bg-[var(--accent)] px-4 py-2 font-semibold text-[var(--on-accent)] disabled:opacity-40"
+          className="btn-primary min-h-11 rounded-lg px-4 py-2 font-semibold disabled:opacity-40"
         >
           ถาม
         </button>

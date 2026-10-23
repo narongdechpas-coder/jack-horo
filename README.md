@@ -44,6 +44,20 @@ npm start          # เปิดเว็บจาก out/
 - **ค่าใช้จ่าย:** ราว 0.3 บาทต่อคำถาม แนะนำให้ตั้ง monthly spend limit ใน Anthropic Console
 - โค้ด: `src/lib/chat/` (prompt, ตัวแปลงผลดวงเป็นข้อความ, ตัวตรวจคำขอ, handler) และ `src/components/FortuneChat.tsx`
 
+## ดีไซน์ (Cosmic Neon)
+
+- **โทนสี:** อยู่ใน `src/app/globals.css` มีโหมดมืดและสว่าง ทุกคู่สีตัวอักษรกับพื้นผ่าน WCAG AA
+  - ปุ่มใช้ `.btn-primary` / `.btn-secondary`
+  - ข้อความสีม่วงใช้ `--accent-text`
+  - สีนีออน `--neon-*` ใช้เฉพาะเส้นขอบและแสงเรือง
+- **ปุ่มสลับธีม:** จำค่าไว้ใน localStorage (`theme`) และมีสคริปต์ใน `<head>` กันจอกะพริบ
+- **หน้าแรก:** `src/components/home/`
+  - Hero
+  - การ์ด 5 ศาสตร์ (อ่านจาก `src/lib/systems/registry.ts`)
+  - ดวงวันนี้ตามวันเกิด (หลักทักษา `src/lib/systems/daily/taksa.ts`)
+  - ไพ่ประจำวัน (seed จากวันที่)
+- **ภาพประกอบ:** `public/art/` สร้างจากภาพต้นฉบับด้วย `node scripts/prepare-site-images.mjs <โฟลเดอร์ภาพ>` รายการภาพและ prompt อยู่ที่ `docs/design/image-assets.md`
+
 ## หลักการทำงาน
 
 - **โค้ดคำนวณดวง** ด้วยฟังก์ชันที่ให้ผลเหมือนเดิมทุกครั้งและมีเทสต์ครอบคลุม

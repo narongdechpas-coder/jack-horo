@@ -76,7 +76,7 @@ export function BaziClient() {
             <option value="female">หญิง</option>
           </select>
         </label>
-        <button type="submit" className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)]">
+        <button type="submit" className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold">
           วางดวง
         </button>
       </form>
@@ -173,7 +173,7 @@ export function BaziClient() {
                     <div className="text-[11px]">
                       {ELEMENT_INFO[l.stemElement].th} {l.favorable ? "✓ ส่งเสริม" : "· ไม่ส่งเสริม"}
                     </div>
-                    {l.current && <div className="text-[11px] font-semibold text-[var(--accent)]">ตอนนี้</div>}
+                    {l.current && <div className="text-[11px] font-semibold text-[var(--accent-text)]">ตอนนี้</div>}
                   </div>
                 ))}
               </div>

@@ -1,0 +1,76 @@
+{
+  "hero-wide": {
+    "id": "IMG-01",
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      800,
+      1280,
+      1672
+    ]
+  },
+  "hero-tall": {
+    "id": "IMG-01M",
+    "width": 1122,
+    "height": 1402,
+    "widths": [
+      480,
+      800,
+      1122
+    ]
+  },
+  "cat-thai-seven": {
+    "id": "IMG-02",
+    "width": 1448,
+    "height": 1086,
+    "widths": [
+      480,
+      960
+    ]
+  },
+  "cat-playing-cards": {
+    "id": "IMG-03",
+    "width": 1448,
+    "height": 1086,
+    "widths": [
+      480,
+      960
+    ]
+  },
+  "cat-tarot": {
+    "id": "IMG-04",
+    "width": 1448,
+    "height": 1086,
+    "widths": [
+      480,
+      960
+    ]
+  },
+  "cat-oraculum": {
+    "id": "IMG-05",
+    "width": 1448,
+    "height": 1086,
+    "widths": [
+      480,
+      960
+    ]
+  },
+  "cat-bazi": {
+    "id": "IMG-06",
+    "width": 1448,
+    "height": 1086,
+    "widths": [
+      480,
+      960
+    ]
+  },
+  "daily": {
+    "id": "IMG-07",
+    "width": 1086,
+    "height": 1448,
+    "widths": [
+      480,
+      900
+    ]
+  }
+}

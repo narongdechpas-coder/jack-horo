@@ -73,7 +73,7 @@ export function ThaiSevenClient() {
             className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2"
           />
         </label>
-        <button type="submit" className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)]">
+        <button type="submit" className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold">
           ดูดวง
         </button>
       </form>
@@ -114,7 +114,7 @@ export function ThaiSevenClient() {
                         ))}
                       </tr>
                     ))}
-                    <tr className="bg-[var(--bg)]">
+                    <tr className="bg-[var(--surface-2)]">
                       {result.sums.map((s, c) => (
                         <td key={c} className="px-0.5 py-2 sm:p-2">
                           <div className="text-xl sm:text-2xl font-semibold text-[var(--gold)]">{s}</div>

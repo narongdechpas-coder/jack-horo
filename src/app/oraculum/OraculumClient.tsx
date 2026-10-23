@@ -91,10 +91,10 @@ export function OraculumClient() {
           </div>
 
           <div className="flex gap-3">
-            <button type="button" onClick={() => startDraw(parsed!.questionIndex)} className="flex-1 rounded-lg border border-[var(--accent)] px-4 py-3 text-[var(--accent)]">
+            <button type="button" onClick={() => startDraw(parsed!.questionIndex)} className="flex-1 rounded-lg border border-[var(--accent)] px-4 py-3 text-[var(--accent-text)]">
               ↺ ขีดใหม่
             </button>
-            <button type="button" onClick={() => { setQuestion(null); router.push(pathname); }} className="flex-1 rounded-lg bg-[var(--accent)] px-4 py-3 font-semibold text-[var(--on-accent)]">
+            <button type="button" onClick={() => { setQuestion(null); router.push(pathname); }} className="flex-1 btn-primary min-h-11 rounded-lg px-4 py-3 font-semibold">
               ✦ ถามใหม่
             </button>
           </div>
@@ -158,14 +158,14 @@ export function OraculumClient() {
             ))}
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={randomAll} className="flex-1 rounded-lg border border-[var(--accent)] px-4 py-3 text-[var(--accent)]">
+            <button type="button" onClick={randomAll} className="flex-1 rounded-lg border border-[var(--accent)] px-4 py-3 text-[var(--accent-text)]">
               🎲 สุ่มให้ทั้งหมด
             </button>
             <button
               type="button"
               onClick={reveal}
               disabled={!ready}
-              className="flex-[1.4] rounded-lg bg-[var(--accent)] px-4 py-3 font-semibold text-[var(--on-accent)] disabled:opacity-40"
+              className="flex-[1.4] btn-primary min-h-11 rounded-lg px-4 py-3 font-semibold disabled:opacity-40"
             >
               ✦ เปิดคำทำนาย
             </button>
