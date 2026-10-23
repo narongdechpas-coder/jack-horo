@@ -5,7 +5,8 @@ import { readOracle } from "@/lib/systems/oraculum/oracle";
 import { readSpread } from "@/lib/systems/playing-cards/spreads";
 import { TAROT_SPREADS, readTarot } from "@/lib/systems/tarot/spreads";
 import { calculateSeven } from "@/lib/systems/thai-seven/calculate";
-import { baziContext, oracleContext, playingCardsContext, sevenContext, tarotContext } from "./context";
+import { baziContext, oracleContext, playingCardsContext, sevenContext, tarotContext, zodiacContext } from "./context";
+import { calculateZodiac } from "@/lib/systems/zodiac/chart";
 import { REFUSAL_TEXT, buildParams, createChatHandler } from "./handler";
 import { LIMITS, MODEL } from "./prompt";
 import { parseChatRequest } from "./request";
@@ -42,6 +43,13 @@ describe("reading contexts", () => {
     expect(text).toContain("แถว 1: อัตตะ=");
     expect(text).toContain("มหาทักษา");
     expect(text).toContain("อายุ 36 ปี");
+    expect(text).not.toMatch(/undefined|NaN/);
+    expect(text.length).toBeLessThan(LIMITS.contextChars);
+  });
+
+  it("gives the AI the zodiac chart, today and the yearly transits", () => {
+    const text = zodiacContext(calculateZodiac({ year: 1990, month: 8, day: 15, time: "19:30", province: "เชียงใหม่" }), new Date(2026, 9, 23));
+    for (const m of ["ดวงอาทิตย์ (", "ราศีสิงห์", "ลัคนา (", "ดวงวันนี้", "ดวงช่วงปีนี้", "ดวงปีหน้า", "Tropical"]) expect(text).toContain(m);
     expect(text).not.toMatch(/undefined|NaN/);
     expect(text.length).toBeLessThan(LIMITS.contextChars);
   });

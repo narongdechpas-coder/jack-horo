@@ -7,6 +7,9 @@ import { annualBazi, annualContext, yearsAhead } from "@/lib/systems/bazi/annual
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import type { OracleReading } from "@/lib/systems/oraculum/oracle";
 import { ORACULUM_BACKGROUND } from "@/lib/systems/oraculum/lore";
+import { PLANET_ORDER, dailyZodiac, yearlyZodiac, type ZodiacChart } from "@/lib/systems/zodiac/chart";
+import { ELEMENT_INFO as ZODIAC_ELEMENTS, HOUSES as ZODIAC_HOUSES, MODALITY_INFO, PLANETS, SIGNS } from "@/lib/systems/zodiac/lore";
+import { interpretZodiac } from "@/lib/systems/zodiac/story";
 import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
 import { TAROT_LORE } from "@/lib/systems/tarot/lore";
 import { SOURCE_LABEL, TOPIC_LABEL, detectTopic, type Combo, type Topic } from "@/lib/systems/reading-kb";
@@ -138,4 +141,41 @@ export function baziContext(r: BaziResult, today?: Date): string {
       : []),
     readingsText(interpretBazi(r, today)),
   ].join("\n");
+}
+
+export function zodiacContext(c: ZodiacChart, today?: Date): string {
+  const sign = (i: number) => SIGNS[i];
+  const deg = (d: number) => `${Math.floor(d)}°`;
+  const sun = sign(c.planets.sun.sign);
+  const lines = [
+    "วิธีดู: โหราศาสตร์สากล 12 ราศีแบบ Tropical (ราศีเริ่มที่จุดวสันตวิษุวัต ต่างจากราศีแบบไทยซึ่งเลื่อนไปราว 24 วัน)",
+    `เกิดที่: ${c.province.name} · ${c.hasTime ? "รู้เวลาเกิด" : "ไม่รู้เวลาเกิด จึงไม่มีลัคนา"}`,
+    "ตำแหน่งดาวกำเนิด:",
+    ...PLANET_ORDER.map((p) => {
+      const pl = c.planets[p];
+      const uncertain = (p === "sun" && c.sunUncertain) || (p === "moon" && c.moonUncertain) ? " (วันนั้นย้ายราศี ยังไม่แน่ชัด)" : "";
+      return `- ${PLANETS[p].th} (${PLANETS[p].meaning}): ${sign(pl.sign).th} ${deg(pl.degree)}${uncertain}`;
+    }),
+    ...(c.ascendant ? [`- ลัคนา (ภาพที่คนอื่นเห็น): ${sign(c.ascendant.sign).th} ${deg(c.ascendant.degree)}`] : []),
+    `ราศีดวงอาทิตย์ ${sun.th}: ธาตุ${ZODIAC_ELEMENTS[sun.element].th} · ${MODALITY_INFO[sun.modality].th} · ดาวเจ้าเรือน${PLANETS[sun.ruler].th}`,
+    `คลังความรู้ของราศีหลัก: ตัวตน: ${sun.sun} | ความรัก: ${sun.love} | การงาน: ${sun.work}`,
+    `ดวงจันทร์${sign(c.planets.moon.sign).th}: ${sign(c.planets.moon.sign).moon}`,
+    ...(c.ascendant ? [`ลัคนา${sign(c.ascendant.sign).th}: ${sign(c.ascendant.sign).rising}`] : []),
+  ];
+  if (today) {
+    const d = dailyZodiac(c.planets.sun.sign, today);
+    lines.push(
+      `วันนี้: ${thaiDate(today)}`,
+      `ดวงวันนี้ (ดวงจันทร์จรนับจากราศีดวงอาทิตย์): ดวงจันทร์อยู่${sign(d.moonSign).th} = เรือนที่ ${d.house + 1} (${ZODIAC_HOUSES[d.house]}) · ${d.story} · คำแนะนำ: ${d.advice}`,
+    );
+    for (const [label, ahead] of [["ช่วงปีนี้", 0], ["ปีหน้า (ราวเดือนเดียวกันของปีหน้า)", 1]] as const) {
+      const y = yearlyZodiac(c.planets.sun.sign, new Date(today.getFullYear() + ahead, today.getMonth(), today.getDate()));
+      lines.push(
+        `ดวง${label}: ดาวพฤหัสบดีจร${sign(y.jupiterSign).th} = เรือนที่ ${y.jupiterHouse + 1} (${ZODIAC_HOUSES[y.jupiterHouse]}): ${y.jupiter}` +
+          ` · ดาวเสาร์จร${sign(y.saturnSign).th} = เรือนที่ ${y.saturnHouse + 1} (${ZODIAC_HOUSES[y.saturnHouse]}): ${y.saturn}`,
+      );
+    }
+  }
+  lines.push("คำทำนายจากเว็บ:", readingsText(interpretZodiac(c, today)));
+  return lines.join("\n");
 }

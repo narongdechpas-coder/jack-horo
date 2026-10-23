@@ -1,7 +1,7 @@
 export type Origin = "thai" | "western" | "chinese";
 
 /** สีประจำศาสตร์ (ดู --cat-* และ --neon-* ใน globals.css) */
-export type Accent = "blue" | "magenta" | "purple" | "cyan" | "gold";
+export type Accent = "blue" | "magenta" | "purple" | "cyan" | "gold" | "orange";
 
 export interface SystemInfo {
   id: string;
@@ -36,6 +36,18 @@ export const SYSTEMS: SystemInfo[] = [
     accent: "blue",
     art: "cat-thai-seven",
     artAlt: "เลข 7 เรืองแสงล้อมด้วยดวงดาวหมายเลข 1 ถึง 7",
+  },
+  {
+    id: "zodiac",
+    name: "12 ราศี (โหราศาสตร์สากล)",
+    navLabel: "12 ราศี",
+    origin: "western",
+    description: "ราศีดวงอาทิตย์ ดวงจันทร์ และลัคนาจากวันเวลาเกิด พร้อมดวงวันนี้และดวงช่วงปีตามดาวจร",
+    href: "/zodiac",
+    accent: "orange",
+    // TODO: เปลี่ยนเป็น "cat-zodiac" เมื่อได้ภาพ IMG-08
+    art: "hero-wide",
+    artAlt: "วงล้อจักรราศีเรืองแสงกลางอวกาศ",
   },
   {
     id: "playing-cards",
