@@ -56,7 +56,7 @@ Style: Cosmic Neon digital illustration, deep midnight navy and indigo environme
 
 ### IMG-02: เลข 7 ตัว (4:3)
 ```
-Minimalist luxury line-art illustration, 4:3. A large elegant numeral "7" drawn only with thin glowing gold lines, encircled by seven small gold stars evenly spaced on a fine circular orbit line, centered on a flat deep midnight-navy background (#0B1230) with a very subtle soft vignette and a few tiny gold star dots. The subject fills no more than 40% of the frame, generous empty space around it. Only gold linework on navy, plus a faint electric-blue glow (#38BDF8) behind the subject. Clean, calm, premium, cohesive icon-like composition, like a luxury book cover. No other text or numbers, no watermark, no extra objects, no landscape.
+Minimalist luxury line-art illustration, 4:3. The Roman numeral "VII" in a tall, elegant classical serif (like letters engraved on an ancient Roman monument), drawn only with thin glowing gold double-line strokes, with fine serifs and delicate engraved detailing. It is centered inside a fine circular orbit line with seven small gold four-pointed stars evenly spaced around it. The whole design sits in the center of a flat deep midnight-navy background (#0B1230), with a very subtle soft vignette and a few tiny gold star dots. The subject fills no more than 40% of the frame, with generous empty space around it. Only gold linework on navy, plus a faint electric-blue glow (#38BDF8) behind the numeral. Clean, calm, premium, cohesive icon-like composition, like a luxury book cover. The only characters are the three letters V, I, I, spelled correctly as "VII". No other text, no Arabic numerals, no watermark, no extra objects, no landscape.
 ```
 
 ### IMG-08: 12 ราศี (4:3)
