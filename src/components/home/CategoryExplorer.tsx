@@ -15,7 +15,7 @@ function AstrologyCategoryCard({ s }: { s: SystemInfo }) {
           <ArtImage
             name={s.art}
             alt={s.artAlt}
-            sizes="(min-width: 1024px) 370px, (min-width: 640px) 45vw, 112px"
+            sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 112px"
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none sm:aspect-[4/3] sm:h-auto"
           />
         </div>
@@ -47,7 +47,7 @@ export function CategoryExplorer() {
         </h2>
         <p className="text-[var(--muted)]">ศาสตร์ที่แตกต่าง แต่เป้าหมายเดียวกัน คือช่วยให้คุณเข้าใจตัวเองและมองเห็นเส้นทางข้างหน้า</p>
       </div>
-      <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+      <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
         {SYSTEMS.map((s) => (
           <AstrologyCategoryCard key={s.id} s={s} />
         ))}

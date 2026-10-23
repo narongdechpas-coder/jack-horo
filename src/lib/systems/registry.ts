@@ -1,7 +1,7 @@
 export type Origin = "thai" | "western" | "chinese";
 
 /** สีประจำศาสตร์ (ดู --cat-* และ --neon-* ใน globals.css) */
-export type Accent = "blue" | "magenta" | "purple" | "cyan" | "gold" | "orange";
+export type Accent = "blue" | "magenta" | "purple" | "cyan" | "gold" | "orange" | "jade";
 
 export interface SystemInfo {
   id: string;
@@ -91,5 +91,17 @@ export const SYSTEMS: SystemInfo[] = [
     accent: "gold",
     art: "cat-bazi",
     artAlt: "เสาสี่ต้นใต้วงแปดทิศและสัญลักษณ์ธาตุทั้งห้า",
+  },
+  {
+    id: "iching",
+    name: "อี้จิง (I Ching)",
+    navLabel: "อี้จิง",
+    origin: "chinese",
+    description: "ตั้งคำถาม โยนเหรียญ 6 ครั้ง รับคำตอบจาก 1 ใน 64 ฉากของคัมภีร์แห่งความเปลี่ยนแปลง",
+    href: "/iching",
+    accent: "jade",
+    // TODO: เปลี่ยนเป็น "cat-iching" เมื่อได้ภาพ IMG-09
+    art: "hero-wide",
+    artAlt: "เหรียญจีนโบราณลอยเหนือคัมภีร์ ใต้เส้นเรืองแสงหกเส้น",
   },
 ];

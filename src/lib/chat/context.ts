@@ -10,6 +10,8 @@ import { ORACULUM_BACKGROUND } from "@/lib/systems/oraculum/lore";
 import { PLANET_ORDER, dailyZodiac, yearlyZodiac, type ZodiacChart } from "@/lib/systems/zodiac/chart";
 import { ELEMENT_INFO as ZODIAC_ELEMENTS, HOUSES as ZODIAC_HOUSES, MODALITY_INFO, PLANETS, SIGNS } from "@/lib/systems/zodiac/lore";
 import { interpretZodiac } from "@/lib/systems/zodiac/story";
+import type { Hexagram, IChingReading } from "@/lib/systems/iching/cast";
+import { LINE_POSITIONS, READING_PRINCIPLES as ICHING_PRINCIPLES } from "@/lib/systems/iching/lore";
 import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
 import { TAROT_LORE } from "@/lib/systems/tarot/lore";
 import { SOURCE_LABEL, TOPIC_LABEL, detectTopic, type Combo, type Topic } from "@/lib/systems/reading-kb";
@@ -178,4 +180,27 @@ export function zodiacContext(c: ZodiacChart, today?: Date): string {
   }
   lines.push("คำทำนายจากเว็บ:", readingsText(interpretZodiac(c, today)));
   return lines.join("\n");
+}
+
+const hexagramText = (label: string, h: Hexagram) =>
+  [
+    `${label}: ฉากที่ ${h.number} ${h.zh} (${h.pinyin}) "${h.lore.th}" · ตรีแกรมบน ${h.upper.th} ${h.upper.symbol} (${h.upper.nature}) · ตรีแกรมล่าง ${h.lower.th} ${h.lower.symbol} (${h.lower.nature})`,
+    `- คำตัดสินในคัมภีร์ (ภาษาจีนโบราณ): ${h.judgment}`,
+    `- ความหมาย: ${h.lore.meaning} | ความรัก: ${h.lore.love} | การงาน/การเงิน: ${h.lore.work} | คำแนะนำ: ${h.lore.advice}`,
+  ].join("\n");
+
+export function ichingContext(r: IChingReading): string {
+  const lineName = { 6: "หยินเปลี่ยน", 7: "หยาง", 8: "หยิน", 9: "หยางเปลี่ยน" } as const;
+  return [
+    questionLine(r.question),
+    "วิธีดู: อี้จิง (คัมภีร์แห่งความเปลี่ยนแปลง) โยนเหรียญ 3 เหรียญ 6 ครั้ง ได้เส้นจากล่างขึ้นบน",
+    `เส้นที่ได้ (ล่าง→บน): ${r.values.map((v, i) => `${i + 1}=${v} ${lineName[v]}`).join(" · ")}`,
+    hexagramText("ฉากหลัก (สถานการณ์ตอนนี้)", r.primary),
+    r.changing.length
+      ? `เส้นที่เปลี่ยน: ${r.changing.map((n) => `เส้นที่ ${n} (${LINE_POSITIONS[n - 1]})`).join(" · ")}`
+      : "ไม่มีเส้นเปลี่ยน: สถานการณ์ค่อนข้างนิ่ง ให้อ่านฉากหลักเป็นหลัก",
+    ...(r.result ? [hexagramText("ฉากผลลัพธ์ (ทิศทางที่เรื่องกำลังไป)", r.result)] : []),
+    "หลักการอ่าน (คลังความรู้ของเว็บ):",
+    ...ICHING_PRINCIPLES.map((p) => `- ${p}`),
+  ].join("\n");
 }

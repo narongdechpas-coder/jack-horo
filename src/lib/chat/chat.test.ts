@@ -5,8 +5,9 @@ import { readOracle } from "@/lib/systems/oraculum/oracle";
 import { readSpread } from "@/lib/systems/playing-cards/spreads";
 import { TAROT_SPREADS, readTarot } from "@/lib/systems/tarot/spreads";
 import { calculateSeven } from "@/lib/systems/thai-seven/calculate";
-import { baziContext, oracleContext, playingCardsContext, sevenContext, tarotContext, zodiacContext } from "./context";
+import { baziContext, ichingContext, oracleContext, playingCardsContext, sevenContext, tarotContext, zodiacContext } from "./context";
 import { calculateZodiac } from "@/lib/systems/zodiac/chart";
+import { readIChing } from "@/lib/systems/iching/cast";
 import { REFUSAL_TEXT, buildParams, createChatHandler } from "./handler";
 import { LIMITS, MODEL } from "./prompt";
 import { parseChatRequest } from "./request";
@@ -50,6 +51,13 @@ describe("reading contexts", () => {
   it("gives the AI the zodiac chart, today and the yearly transits", () => {
     const text = zodiacContext(calculateZodiac({ year: 1990, month: 8, day: 15, time: "19:30", province: "เชียงใหม่" }), new Date(2026, 9, 23));
     for (const m of ["ดวงอาทิตย์ (", "ราศีสิงห์", "ลัคนา (", "ดวงวันนี้", "ดวงช่วงปีนี้", "ดวงปีหน้า", "Tropical"]) expect(text).toContain(m);
+    expect(text).not.toMatch(/undefined|NaN/);
+    expect(text.length).toBeLessThan(LIMITS.contextChars);
+  });
+
+  it("gives the AI both I Ching hexagrams and the changing lines", () => {
+    const text = ichingContext(readIChing([9, 7, 7, 8, 8, 6], "ควรย้ายงานไหม"));
+    for (const m of ["ควรย้ายงานไหม", "ฉากหลัก", "泰", "เส้นที่ 1", "เส้นที่ 6", "ฉากผลลัพธ์", "หลักการอ่าน"]) expect(text).toContain(m);
     expect(text).not.toMatch(/undefined|NaN/);
     expect(text.length).toBeLessThan(LIMITS.contextChars);
   });

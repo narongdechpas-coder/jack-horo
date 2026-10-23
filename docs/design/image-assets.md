@@ -21,6 +21,7 @@
 | IMG-05 | การ์ด ตำราพยากรณ์นโปเลียน | DONE | 4:3 | ทึบ | เหมือนข้างบน | `public/art/cat-oraculum-*.webp` |
 | IMG-06 | การ์ด ปาจื้อ | DONE | 4:3 | ทึบ | เหมือนข้างบน | `public/art/cat-bazi-*.webp` |
 | IMG-08 | การ์ดและแบนเนอร์ 12 ราศี | DONE | 4:3 | ทึบ | เหมือนการ์ดอื่น | `public/art/cat-zodiac-*.webp` |
+| IMG-09 | การ์ดและแบนเนอร์อี้จิง | PENDING | 4:3 | ทึบ | ระหว่างรอใช้ hero-wide ชั่วคราว (registry.ts) | `public/art/cat-iching-*.webp` |
 | IMG-07 | ดวงวันนี้ตามวันเกิด | DONE | 3:4 | ทึบ | มือถือแสดงเป็นแถบด้านบน | `public/art/daily-*.webp` |
 | IMG-08 | ไพ่ประจำวัน | EXISTING | 300×527 | — | — | ใช้ภาพ Rider-Waite ของไพ่ที่สุ่มได้จริง `public/tarot/<id>.webp` |
 | — | ดาว เนบิวลา พื้นหลัง ไอคอน | CSS/SVG | — | — | — | ทำด้วย CSS และ SVG ไม่ต้องใช้ภาพ |
@@ -44,6 +45,13 @@ Style: Cosmic Neon digital illustration, deep midnight navy and indigo environme
 ### IMG-01M: Hero มือถือ (4:5 แนวตั้ง)
 ```
 Create a vertical 4:5 cinematic hero illustration for a modern astrology website called Horoscope Hub, designed for mobile screens. In the upper half, a luminous celestial zodiac wheel and a crescent moon float among deep-space nebulae, fine constellations, and subtle shooting stars. In the lower half, calm, dark midnight sky above distant mountain silhouettes, with a small contemplative human silhouette on a ridge looking up. Keep the entire lower half visually quiet and dark for overlaying a large headline and two buttons. Deep navy and indigo dominant, with controlled neon purple, electric blue, and magenta highlights. Elegant, mysterious, youthful, premium digital artwork. No text, no letters, no logos, no watermarks.
+
+Style: Cosmic Neon digital illustration, deep midnight navy and indigo environment, controlled neon purple and electric blue illumination, subtle magenta highlights, celestial dust, elegant astronomical geometry, sophisticated mystical atmosphere, high-quality editorial artwork, clean focal hierarchy, refined lighting, polished digital painting, visually cohesive with a modern premium astrology platform.
+```
+
+### IMG-09: อี้จิง (4:3)
+```
+Create a 4:3 Cosmic Neon illustration for "I Ching – the Chinese Book of Changes". Three ancient bronze Chinese coins with square holes float and spin in mid-air above an open bamboo-slip scroll, leaving trails of light. Above them, six glowing horizontal lines (some solid, some broken in the middle) stack upward like a luminous hexagram made of starlight, surrounded by a faint circle of the eight trigrams and a softly glowing yin-yang at the center of the sky. Misty jade-green mountains and drifting clouds below in a classical Chinese ink-painting mood. Deep navy and indigo dominant, with controlled neon jade-green and electric blue light, subtle purple, and restrained antique-gold highlights on the coins. Keep the composition centered with dark space at top and bottom so it can be cropped into a wide banner. Elegant, mysterious, premium editorial digital painting. No text, no letters, no Chinese characters, no numbers, no logos, no watermarks.
 
 Style: Cosmic Neon digital illustration, deep midnight navy and indigo environment, controlled neon purple and electric blue illumination, subtle magenta highlights, celestial dust, elegant astronomical geometry, sophisticated mystical atmosphere, high-quality editorial artwork, clean focal hierarchy, refined lighting, polished digital painting, visually cohesive with a modern premium astrology platform.
 ```
