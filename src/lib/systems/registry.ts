@@ -45,9 +45,8 @@ export const SYSTEMS: SystemInfo[] = [
     description: "ราศีดวงอาทิตย์ ดวงจันทร์ และลัคนาจากวันเวลาเกิด พร้อมดวงวันนี้และดวงช่วงปีตามดาวจร",
     href: "/zodiac",
     accent: "orange",
-    // TODO: เปลี่ยนเป็น "cat-zodiac" เมื่อได้ภาพ IMG-08
-    art: "hero-wide",
-    artAlt: "วงล้อจักรราศีเรืองแสงกลางอวกาศ",
+    art: "cat-zodiac",
+    artAlt: "วงล้อจักรราศีเรืองแสงที่มีดวงอาทิตย์และพระจันทร์เสี้ยวอยู่ตรงกลาง ล้อมด้วยดาวเคราะห์",
   },
   {
     id: "playing-cards",
