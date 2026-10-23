@@ -11,6 +11,7 @@
     "tarot:images": "node scripts/prepare-tarot-images.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.1.0",
     "@fontsource/noto-sans-thai": "^5.3.0",
     "lunar-typescript": "^1.8.6",
     "next": "^16.3.8",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@cometpisces/tarot-kit-images": "^0.2.0",
+    "@netlify/functions": "^6.0.3",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",

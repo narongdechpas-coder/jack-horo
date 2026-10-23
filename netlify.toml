@@ -1,0 +1,14 @@
+# Netlify: build the static site and deploy the AI fortune-teller function.
+# ANTHROPIC_API_KEY must be set in Netlify (Site configuration → Environment variables), never here.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Shows the "ถามหมอดูต่อ" chat; GitHub Pages builds leave it unset, so the chat stays hidden there
+  NEXT_PUBLIC_CHAT_ENDPOINT = "/.netlify/functions/fortune-chat"

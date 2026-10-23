@@ -8,6 +8,8 @@ import { TAROT_SPREADS, getTarotSpread, readTarot } from "@/lib/systems/tarot/sp
 import { CardDrawFlow, type DrawResult } from "@/components/CardDrawFlow";
 import { TarotCard } from "@/components/TarotCard";
 import { CelticCross } from "./CelticCross";
+import { FortuneChat } from "@/components/FortuneChat";
+import { tarotContext } from "@/lib/chat/context";
 
 const FLOW_SPREADS = TAROT_SPREADS.map((s) => ({
   id: s.id, name: s.name, description: s.description, positions: s.positions.map((p) => p.name),
@@ -105,6 +107,12 @@ export function TarotClient() {
               ))}
             </ul>
           </div>
+          <FortuneChat
+            key={`${qSpread}-${qSeed}-${qPick}`}
+            systemName="ไพ่ยิปซี"
+            context={tarotContext(reading, qQuestion)}
+            suggestions={["สรุปไพ่ทั้งหมดให้เข้าใจง่าย ๆ", "ไพ่บอกว่าควรทำอะไรต่อ", "ไพ่ใบไหนสำคัญที่สุด"]}
+          />
           <p className="text-xs text-[var(--muted)]">คัดลอกลิงก์ของหน้านี้ไปแชร์ได้ คนที่เปิดลิงก์จะเห็นไพ่ชุดเดียวกับคุณ</p>
           <button type="button" onClick={() => router.push(pathname)} className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)]">
             🔀 ดูดวงใหม่

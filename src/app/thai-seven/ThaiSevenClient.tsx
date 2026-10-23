@@ -5,6 +5,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { calculateSeven, sumLevel, type SevenResult } from "@/lib/systems/thai-seven/calculate";
 import { interpretSeven } from "@/lib/systems/thai-seven/story";
 import { ReadingList } from "@/components/ReadingList";
+import { FortuneChat } from "@/components/FortuneChat";
+import { sevenContext } from "@/lib/chat/context";
 
 const LEVEL_STYLE = { สูง: "text-emerald-600", กลาง: "text-[var(--muted)]", ต่ำ: "text-rose-500" } as const;
 
@@ -87,6 +89,12 @@ export function ThaiSevenClient() {
             </p>
             <ReadingList items={interpretSeven(result)} />
           </section>
+          <FortuneChat
+            key={`${qDate}-${qTime}`}
+            systemName="เลข 7 ตัว"
+            context={sevenContext(result)}
+            suggestions={["สรุปดวงของฉันให้สั้น ๆ", "ปีนี้ควรระวังเรื่องอะไร", "งานแบบไหนเหมาะกับฉัน"]}
+          />
           <details className="rounded-xl border border-[var(--border)] p-4">
             <summary className="cursor-pointer font-semibold">ดูตารางเลข 7 ตัว (สำหรับผู้สนใจโหราศาสตร์)</summary>
             <div className="mt-3 space-y-3">

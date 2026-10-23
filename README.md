@@ -34,6 +34,16 @@ npm start          # เปิดเว็บจาก out/
 
 ถ้าจะ deploy ใต้ path อื่น ให้ตั้ง `NEXT_PUBLIC_BASE_PATH` (เช่น `/jack-horo`) ตอน build
 
+## หมอดู AI (ถามต่อจากผลดวง)
+
+หน้าผลของทุกศาสตร์มีปุ่ม "🔮 ถามหมอดูต่อ" ให้ Claude (`claude-sonnet-5-5`) อธิบายผลดวงที่แสดงอยู่และตอบคำถามเพิ่ม
+
+- ทำงานเฉพาะบน **Netlify** ผ่าน function `netlify/functions/fortune-chat.mts` เพราะ API key ต้องอยู่ฝั่ง server
+- บน GitHub Pages ไม่มี server ปุ่มแชทจึงซ่อนไว้ ส่วนอื่นใช้งานได้ปกติ
+- **ตั้งค่า:** Netlify → Site configuration → Environment variables → เพิ่ม `ANTHROPIC_API_KEY` (สร้างได้ที่ console.anthropic.com) แล้ว deploy ใหม่
+- **ค่าใช้จ่าย:** ราว 0.3 บาทต่อคำถาม แนะนำให้ตั้ง monthly spend limit ใน Anthropic Console
+- โค้ด: `src/lib/chat/` (prompt, ตัวแปลงผลดวงเป็นข้อความ, ตัวตรวจคำขอ, handler) และ `src/components/FortuneChat.tsx`
+
 ## หลักการทำงาน
 
 - **โค้ดคำนวณดวง** ด้วยฟังก์ชันที่ให้ผลเหมือนเดิมทุกครั้งและมีเทสต์ครอบคลุม

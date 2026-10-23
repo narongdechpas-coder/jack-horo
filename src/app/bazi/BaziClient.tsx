@@ -6,6 +6,8 @@ import { calculateBazi, type BaziResult, type Gender } from "@/lib/systems/bazi/
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import { ELEMENT_INFO, TEN_GODS } from "@/lib/systems/bazi/names";
 import { ReadingList } from "@/components/ReadingList";
+import { FortuneChat } from "@/components/FortuneChat";
+import { baziContext } from "@/lib/chat/context";
 import { ElementBars } from "./ElementBars";
 
 const yinYang = (yang: boolean) => (yang ? "หยาง" : "หยิน");
@@ -84,6 +86,12 @@ export function BaziClient() {
             <h2 className="text-xl font-semibold">คำทำนาย</h2>
             <ReadingList items={interpretBazi(result)} />
           </section>
+          <FortuneChat
+            key={`${qDate}-${qTime}-${qGender}`}
+            systemName="ปาจื้อ"
+            context={baziContext(result)}
+            suggestions={["สรุปดวงของฉันให้สั้น ๆ", "ช่วงนี้ควรทำอะไรเพื่อเสริมดวง", "งานแบบไหนเหมาะกับธาตุของฉัน"]}
+          />
           <details className="rounded-xl border border-[var(--border)] p-4">
             <summary className="cursor-pointer font-semibold">ดูผังดวงสี่เสา (สำหรับผู้สนใจโหราศาสตร์จีน)</summary>
             <div className="mt-4 space-y-8">

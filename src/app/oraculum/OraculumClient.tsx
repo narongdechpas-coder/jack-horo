@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { QUESTIONS, type Tone } from "@/lib/systems/oraculum/data";
 import { LINES, parseOracleParams, readOracle } from "@/lib/systems/oraculum/oracle";
+import { FortuneChat } from "@/components/FortuneChat";
+import { oracleContext } from "@/lib/chat/context";
 
 interface Dash {
   height: number;
@@ -96,6 +98,12 @@ export function OraculumClient() {
               ✦ ถามใหม่
             </button>
           </div>
+          <FortuneChat
+            key={`${parsed!.questionIndex}-${parsed!.counts.join(",")}`}
+            systemName="ตำราพยากรณ์นโปเลียน"
+            context={oracleContext(reading)}
+            suggestions={["คำพยากรณ์นี้หมายถึงอะไรกับเรื่องของฉัน", "ควรทำอย่างไรต่อ", "ต้องรอนานไหมกว่าจะเห็นผล"]}
+          />
           <p className="text-center text-xs text-[var(--muted)]">คัดลอกลิงก์ของหน้านี้ไปแชร์ได้ คนที่เปิดจะเห็นคำทำนายเดียวกัน</p>
         </section>
       ) : question === null ? (

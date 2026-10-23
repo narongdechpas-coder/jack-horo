@@ -7,6 +7,8 @@ import { SPREADS, getSpread, readSpread } from "@/lib/systems/playing-cards/spre
 import { parsePicks } from "@/lib/random";
 import { CardDrawFlow, type DrawResult } from "@/components/CardDrawFlow";
 import { PlayingCard } from "@/components/PlayingCard";
+import { FortuneChat } from "@/components/FortuneChat";
+import { playingCardsContext } from "@/lib/chat/context";
 
 const FLOW_SPREADS = SPREADS.map((s) => ({ id: s.id, name: s.name, description: s.description, positions: s.positions }));
 
@@ -77,6 +79,12 @@ export function PlayingCardsClient() {
             <h3 className="font-semibold text-[var(--accent)]">สรุปคำทำนาย</h3>
             <p className="mt-1 leading-relaxed">{reading.summary}</p>
           </div>
+          <FortuneChat
+            key={`${qSpread}-${qSeed}-${qPick}`}
+            systemName="ไพ่ป๊อก"
+            context={playingCardsContext(reading, qQuestion)}
+            suggestions={["สรุปไพ่ทั้งหมดให้เข้าใจง่าย ๆ", "ไพ่บอกว่าควรทำอะไรต่อ", "มีเรื่องอะไรที่ต้องระวังไหม"]}
+          />
           <p className="text-xs text-[var(--muted)]">คัดลอกลิงก์ของหน้านี้ไปแชร์ได้ คนที่เปิดลิงก์จะเห็นไพ่ชุดเดียวกับคุณ</p>
           <button type="button" onClick={() => router.push(pathname)} className="rounded-lg bg-[var(--accent)] px-5 py-2 font-semibold text-[var(--on-accent)]">
             🔀 ดูดวงใหม่
