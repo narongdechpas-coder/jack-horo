@@ -63,7 +63,7 @@ export function CardDrawFlow({
 
   if (phase === "setup") {
     return (
-      <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+      <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 sys-panel">
         <div className="text-sm font-semibold">1. เลือกรูปแบบการดูไพ่</div>
         <div className="grid gap-2 sm:grid-cols-2">
           {spreads.map((s) => (
@@ -97,7 +97,7 @@ export function CardDrawFlow({
 
   if (phase === "shuffling") {
     return (
-      <div className="flex flex-col items-center gap-6 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-10" aria-live="polite">
+      <div className="flex flex-col items-center gap-6 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-10 sys-panel" aria-live="polite">
         <div className="relative h-36 w-24">
           {[0, 1, 2, 3, 4, 5].map((i) => (
             <div
@@ -114,7 +114,7 @@ export function CardDrawFlow({
 
   const done = picks.length === need;
   return (
-    <div className="space-y-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+    <div className="space-y-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 sys-panel">
       <div className="space-y-2">
         <div className="font-semibold">
           3. แตะเลือกไพ่ {need} ใบ ({picks.length}/{need})

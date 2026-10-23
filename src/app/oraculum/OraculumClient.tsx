@@ -121,7 +121,7 @@ export function OraculumClient() {
               key={q}
               type="button"
               onClick={() => startDraw(i)}
-              className="flex w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-left transition hover:border-[var(--accent)]"
+              className="sys-option flex w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-left transition"
             >
               <span className="text-xs text-[var(--gold)]">✦</span>
               {q}
@@ -130,7 +130,7 @@ export function OraculumClient() {
         </section>
       ) : (
         <section className="animate-card-in space-y-4">
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-center">
+          <div className="sys-panel rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-center">
             <div className="text-xs tracking-widest text-[var(--muted)]">คำถามของเจ้า</div>
             <div className="mt-1 font-semibold">{QUESTIONS[question]}</div>
           </div>
@@ -139,7 +139,7 @@ export function OraculumClient() {
             <br />
             (อย่างน้อยบรรทัดละ 1 ขีด) แล้วปล่อยให้โชคชะตากำหนด
           </p>
-          <div className="space-y-3" data-testid="lines">
+          <div className="sys-panel space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4" data-testid="lines">
             {lines.map((dashes, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="w-5 text-center text-[var(--gold)]">{i + 1}</span>

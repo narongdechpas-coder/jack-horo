@@ -49,7 +49,7 @@ export function ThaiSevenClient() {
   return (
     <div className="space-y-8">
 
-      <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+      <form onSubmit={submit} className="flex flex-wrap items-end gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 sys-panel">
         <label className="flex flex-col gap-1 text-sm">
           วันเกิด
           <input
