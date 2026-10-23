@@ -37,6 +37,7 @@
   --neon-gold: #f59e0b;
   --neon-orange: #f97316;
   --neon-jade: #10b981;
+  --neon-teal: #14b8a6;
   --cat-blue: #0369a1;
   --cat-magenta: #be185d;
   --cat-purple: #6d28d9;
@@ -44,6 +45,7 @@
   --cat-gold: #92400e;
   --cat-orange: #c2410c;
   --cat-jade: #047857;
+  --cat-teal: #0f766e;
   --tone-good: #047857;
   --tone-neutral: #075985;
   --tone-caution: #be123c;
@@ -76,6 +78,7 @@
     --neon-gold: #fbbf24;
     --neon-orange: #fb923c;
     --neon-jade: #34d399;
+    --neon-teal: #2dd4bf;
     --cat-blue: #38bdf8;
     --cat-magenta: #f472b6;
     --cat-purple: #c084fc;
@@ -83,6 +86,7 @@
     --cat-gold: #fbbf24;
     --cat-orange: #fdba74;
     --cat-jade: #6ee7b7;
+    --cat-teal: #5eead4;
     --tone-good: #6ee7b7;
     --tone-neutral: #7dd3fc;
     --tone-caution: #fda4af;
@@ -120,6 +124,7 @@
   --neon-gold: #fbbf24;
   --neon-orange: #fb923c;
   --neon-jade: #34d399;
+  --neon-teal: #2dd4bf;
   --cat-blue: #38bdf8;
   --cat-magenta: #f472b6;
   --cat-purple: #c084fc;
@@ -127,6 +132,7 @@
   --cat-gold: #fbbf24;
   --cat-orange: #fdba74;
   --cat-jade: #6ee7b7;
+  --cat-teal: #5eead4;
   --tone-good: #6ee7b7;
   --tone-neutral: #7dd3fc;
   --tone-caution: #fda4af;

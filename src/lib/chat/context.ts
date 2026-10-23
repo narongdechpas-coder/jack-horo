@@ -11,6 +11,8 @@ import { PLANET_ORDER, dailyZodiac, yearlyZodiac, type ZodiacChart } from "@/lib
 import { ELEMENT_INFO as ZODIAC_ELEMENTS, HOUSES as ZODIAC_HOUSES, MODALITY_INFO, PLANETS, SIGNS } from "@/lib/systems/zodiac/lore";
 import { interpretZodiac } from "@/lib/systems/zodiac/story";
 import type { Hexagram, IChingReading } from "@/lib/systems/iching/cast";
+import { KARMIC_LORE, NUMBER_LORE, PERSONAL_YEAR, READING_PRINCIPLES as NUMEROLOGY_PRINCIPLES } from "@/lib/systems/numerology/lore";
+import { interpretNumerology, personalYearOf, type NumerologyResult } from "@/lib/systems/numerology/story";
 import { LINE_POSITIONS, READING_PRINCIPLES as ICHING_PRINCIPLES } from "@/lib/systems/iching/lore";
 import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
 import { TAROT_LORE } from "@/lib/systems/tarot/lore";
@@ -203,4 +205,37 @@ export function ichingContext(r: IChingReading): string {
     "หลักการอ่าน (คลังความรู้ของเว็บ):",
     ...ICHING_PRINCIPLES.map((p) => `- ${p}`),
   ].join("\n");
+}
+
+export function numerologyContext(r: NumerologyResult, today?: Date): string {
+  const lore = (n: number) => {
+    const l = NUMBER_LORE[n];
+    return `${l.keyword} | ตัวตน: ${l.core} | ความรัก: ${l.love} | งาน: ${l.work} | สิ่งที่ต้องระวัง: ${l.challenge} | คำแนะนำ: ${l.advice}`;
+  };
+  const lines = [
+    "วิธีดู: เลขศาสตร์แบบพีทาโกรัส (Pythagorean numerology) จากวันเกิดและชื่อภาษาอังกฤษ",
+    `เลขเส้นทางชีวิต: ${r.core.lifePath} (ผลรวม ${r.core.lifePathCompound}/${r.core.lifePath}) = ${lore(r.core.lifePath)}`,
+    `เลขวันเกิด: ${r.core.birthday} = ${NUMBER_LORE[r.core.birthday].keyword}: ${NUMBER_LORE[r.core.birthday].core}`,
+    r.core.karmicDebt.length ? `เลขกรรม: ${r.core.karmicDebt.map((k) => `${k} (${KARMIC_LORE[k]})`).join(" · ")}` : "เลขกรรม: ไม่มี",
+  ];
+  if (r.name) {
+    lines.push(
+      `ชื่อที่ใช้คำนวณ: ${r.input.name} (${r.name.letters})`,
+      `- เลขชะตา (Expression): ${r.name.expression} = ${lore(r.name.expression)}`,
+      ...(r.name.soulUrge ? [`- เลขจิตวิญญาณ (Soul Urge): ${r.name.soulUrge} = ${NUMBER_LORE[r.name.soulUrge].keyword}`] : []),
+      ...(r.name.personality ? [`- เลขบุคลิก (Personality): ${r.name.personality} = ${NUMBER_LORE[r.name.personality].keyword}`] : []),
+    );
+  } else {
+    lines.push("ไม่ได้ใส่ชื่อภาษาอังกฤษ จึงไม่มีเลขจากชื่อ");
+  }
+  if (today) {
+    const y = today.getFullYear();
+    lines.push(`วันนี้: ${thaiDate(today)}`);
+    for (const [label, year] of [["ปีนี้", y], ["ปีหน้า", y + 1], ["อีก 2 ปี", y + 2]] as const) {
+      const py = personalYearOf(r, year);
+      lines.push(`ปีส่วนตัว${label} (พ.ศ. ${year + 543}): ${py} = ${PERSONAL_YEAR[py].theme}: ${PERSONAL_YEAR[py].story}`);
+    }
+  }
+  lines.push("หลักการอ่าน (คลังความรู้ของเว็บ):", ...NUMEROLOGY_PRINCIPLES.map((p) => `- ${p}`), "คำทำนายจากเว็บ:", readingsText(interpretNumerology(r, today)));
+  return lines.join("\n");
 }

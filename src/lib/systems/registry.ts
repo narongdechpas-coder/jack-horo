@@ -1,7 +1,7 @@
 export type Origin = "thai" | "western" | "chinese";
 
 /** สีประจำศาสตร์ (ดู --cat-* และ --neon-* ใน globals.css) */
-export type Accent = "blue" | "magenta" | "purple" | "cyan" | "gold" | "orange" | "jade";
+export type Accent = "blue" | "magenta" | "purple" | "cyan" | "gold" | "orange" | "jade" | "teal";
 
 export interface SystemInfo {
   id: string;
@@ -47,6 +47,18 @@ export const SYSTEMS: SystemInfo[] = [
     accent: "orange",
     art: "cat-zodiac",
     artAlt: "วงล้อจักรราศีเรืองแสงที่มีดวงอาทิตย์และพระจันทร์เสี้ยวอยู่ตรงกลาง ล้อมด้วยดาวเคราะห์",
+  },
+  {
+    id: "numerology",
+    name: "เลขศาสตร์ (Numerology)",
+    navLabel: "เลขศาสตร์",
+    origin: "western",
+    description: "เลขเส้นทางชีวิตจากวันเกิด เลขจากชื่อ และเลขปีส่วนตัวที่บอกบรรยากาศของปีนี้และปีหน้า",
+    href: "/numerology",
+    accent: "teal",
+    // TODO: เปลี่ยนเป็น "cat-numerology" เมื่อได้ภาพ IMG-10
+    art: "hero-wide",
+    artAlt: "ตัวเลข 1 ถึง 9 เรืองแสงเรียงเป็นวงกลางอวกาศ",
   },
   {
     id: "playing-cards",
