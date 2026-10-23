@@ -141,6 +141,19 @@ h1, h2, h3 {
   line-height: 1.3;
 }
 
+/* Thai line breaking: no single orphaned word on the last line (e.g. "ก้าวหน้า" alone),
+   headings split into even lines, and no breaks inside a word */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+p, li, dd, figcaption {
+  text-wrap: pretty;
+}
+body {
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
 /* Visible keyboard focus everywhere */
 :focus-visible {
   outline: 2px solid var(--neon-cyan);
@@ -181,6 +194,50 @@ h1, h2, h3 {
 }
 .panel-glow {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon-purple) 45%, transparent), 0 12px 40px -16px var(--glow);
+}
+
+/* "ถามหมอดูต่อ" call to action: rotating neon border and a soft breathing glow */
+@property --ai-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.ai-cta {
+  position: relative;
+  isolation: isolate;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(from var(--ai-angle), var(--neon-purple), var(--neon-magenta), var(--neon-cyan), var(--neon-purple)) border-box;
+  animation: ai-spin 6s linear infinite, ai-breathe 3.2s ease-in-out infinite;
+}
+.ai-cta:hover {
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    conic-gradient(from var(--ai-angle), var(--neon-purple), var(--neon-magenta), var(--neon-cyan), var(--neon-purple)) border-box;
+}
+@keyframes ai-spin {
+  to { --ai-angle: 360deg; }
+}
+@keyframes ai-breathe {
+  0%, 100% { box-shadow: 0 0 14px -6px var(--neon-purple); }
+  50% { box-shadow: 0 0 30px -4px var(--neon-purple), 0 0 50px -16px var(--neon-cyan); }
+}
+/* Crystal-ball orb drawn in CSS, with a slow shimmer */
+.ai-orb {
+  background:
+    radial-gradient(circle at 32% 28%, rgb(255 255 255 / 0.95) 0 8%, transparent 22%),
+    radial-gradient(circle at 60% 70%, rgb(103 232 249 / 0.85), transparent 55%),
+    radial-gradient(circle at 40% 45%, #c084fc, #7c3aed 55%, #3b0764 100%);
+  box-shadow: 0 0 18px var(--neon-purple), inset 0 -4px 10px rgb(0 0 0 / 0.35);
+  animation: ai-orb 4s ease-in-out infinite;
+}
+@keyframes ai-orb {
+  0%, 100% { filter: hue-rotate(0deg) brightness(1); transform: translateY(0); }
+  50% { filter: hue-rotate(-25deg) brightness(1.15); transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-cta, .ai-orb { animation: none; }
 }
 
 /* Card shuffle: two halves of the deck slide apart and riffle back together */

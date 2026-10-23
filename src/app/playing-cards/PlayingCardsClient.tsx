@@ -59,11 +59,12 @@ export function PlayingCardsClient() {
       {reading && (
         <section className="space-y-4">
           {qQuestion && <p className="text-lg">คำถาม: “{qQuestion}”</p>}
-          <div className="grid gap-4 sm:grid-cols-3">
+          {/* flex + justify-center keeps a single daily card in the middle */}
+          <div className="flex flex-wrap justify-center gap-4">
             {reading.cards.map(({ position, card }, i) => (
               <div
                 key={card.id}
-                className="animate-card-in flex flex-col items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 text-center"
+                className="animate-card-in flex w-full max-w-xs flex-col items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 text-center sm:w-[calc((100%-2rem)/3)]"
                 style={{ animationDelay: `${i * 150}ms` }}
               >
                 <div className="text-sm font-semibold text-[var(--gold)]">{position}</div>
@@ -71,7 +72,7 @@ export function PlayingCardsClient() {
                 <div className="text-sm">
                   {card.rank} {SUITS[card.suit].name} · <span className="text-[var(--muted)]">{TONE_LABEL[card.tone]}</span>
                 </div>
-                <p className="text-sm leading-relaxed">{card.meaning}</p>
+                <p className="text-sm leading-relaxed [text-wrap:balance]">{card.meaning}</p>
               </div>
             ))}
           </div>

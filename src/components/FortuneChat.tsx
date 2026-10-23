@@ -74,13 +74,16 @@ export function FortuneChat({ systemName, context, suggestions }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-3 rounded-xl border border-[var(--accent)] bg-[var(--surface)] p-4 text-left"
+        className="ai-cta flex w-full items-center gap-4 rounded-2xl p-4 text-left"
         data-testid="chat-open"
       >
-        <span className="text-2xl" aria-hidden>🔮</span>
-        <span>
-          <span className="block font-semibold text-[var(--accent-text)]">ถามหมอดูต่อ</span>
-          <span className="block text-sm text-[var(--muted)]">อ่านแล้วงง? ให้หมอดู AI อธิบายผลนี้ หรือถามเรื่องที่อยากรู้เพิ่ม</span>
+        <span className="ai-orb h-12 w-12 shrink-0 rounded-full" aria-hidden />
+        <span className="min-w-0 flex-1">
+          <span className="block text-lg font-bold text-[var(--accent-text)]">ถามหมอดู AI ต่อ</span>
+          <span className="block text-sm text-[var(--muted)]">อ่านแล้วงง? ให้หมอดูอธิบายผลนี้ให้เข้าใจง่าย หรือถามเรื่องที่อยากรู้เพิ่ม</span>
+        </span>
+        <span className="btn-primary hidden shrink-0 rounded-full px-4 py-2 text-sm font-semibold sm:inline-block" aria-hidden>
+          เริ่มคุย →
         </span>
       </button>
     );
@@ -89,7 +92,9 @@ export function FortuneChat({ systemName, context, suggestions }: Props) {
   return (
     <section className="space-y-3 rounded-xl border border-[var(--accent)] bg-[var(--surface)] p-4" data-testid="chat">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-[var(--accent-text)]">🔮 หมอดู AI</h3>
+        <h3 className="flex items-center gap-2 font-semibold text-[var(--accent-text)]">
+          <span className="ai-orb h-6 w-6 rounded-full" aria-hidden /> หมอดู AI
+        </h3>
         {messages.length > 0 && !loading && (
           <button type="button" onClick={() => setMessages([])} className="text-sm text-[var(--muted)]">
             เริ่มใหม่
