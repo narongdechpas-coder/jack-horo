@@ -86,3 +86,58 @@ export function isValidDate(year: number, month: number, day: number): boolean {
   const d = new Date(Date.UTC(year, month - 1, day));
   return d.getUTCFullYear() === year && d.getUTCMonth() === month - 1 && d.getUTCDate() === day;
 }
+
+// ---------------------------------------------------------------------------
+// เลขศาสตร์ชื่อไทย
+// ตารางค่าตัวอักษร สระ และวรรณยุกต์แบบที่แพร่หลายที่สุด (ตรงกันใน KTC, sinsae, leksanook, Dumex)
+// แต่ละสำนักต่างกันเล็กน้อย เช่นตำแหน่งของ ฎ และสระบางตัว จึงบอกไว้บนหน้าเว็บว่าเป็นตารางแบบนิยม
+const THAI_TABLE: Record<number, string> = {
+  1: "กดถทภฤุ่าำ",
+  2: "ขงชบปเแู้",
+  3: "ฆฑฒต๋",
+  4: "คธรญษะโัิ",
+  5: "ฉฌณนมหฎฮฬึ",
+  6: "จลวอใ",
+  7: "ซศสีื๊",
+  8: "ผฝพฟย็",
+  9: "ฏฐไ์",
+};
+
+const THAI_VALUE = new Map<string, number>(
+  Object.entries(THAI_TABLE).flatMap(([n, chars]) => [...chars].map((c) => [c, Number(n)] as [string, number])),
+);
+
+export const thaiCharValue = (c: string) => THAI_VALUE.get(c);
+
+export interface ThaiWordSum {
+  word: string;
+  total: number;
+}
+
+export interface ThaiNameNumbers {
+  /** ผลรวมแยกตามคำ (คำแรก = ชื่อ ที่เหลือ = นามสกุล) */
+  words: ThaiWordSum[];
+  /** ผลรวมทั้งหมด (ชื่อ + นามสกุล) แบบที่หมอดูไทยใช้ตีความ */
+  total: number;
+  /** ลดผลรวมเหลือ 1–9 หรือเลขมาสเตอร์ */
+  reduced: number;
+  /** ตัวอักษรไทยที่ไม่มีในตาราง (เช่น ฃ ฅ ๆ) จึงไม่ถูกนับ */
+  skipped: string[];
+}
+
+/** คำนวณชื่อภาษาไทย คืน null ถ้าไม่มีตัวอักษรไทย */
+export function thaiNameNumbers(name: string): ThaiNameNumbers | null {
+  const words = name.trim().split(/\s+/).filter((w) => /[฀-๿]/.test(w));
+  if (!words.length) return null;
+  const skipped = new Set<string>();
+  const sums = words.map((word) => ({
+    word,
+    total: [...word].reduce((s, c) => {
+      const v = THAI_VALUE.get(c);
+      if (v === undefined && /[฀-๿]/.test(c)) skipped.add(c);
+      return s + (v ?? 0);
+    }, 0),
+  }));
+  const total = sums.reduce((s, w) => s + w.total, 0);
+  return { words: sums, total, reduced: reduce(total), skipped: [...skipped] };
+}

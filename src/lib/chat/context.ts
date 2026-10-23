@@ -226,7 +226,16 @@ export function numerologyContext(r: NumerologyResult, today?: Date): string {
       ...(r.name.personality ? [`- เลขบุคลิก (Personality): ${r.name.personality} = ${NUMBER_LORE[r.name.personality].keyword}`] : []),
     );
   } else {
-    lines.push("ไม่ได้ใส่ชื่อภาษาอังกฤษ จึงไม่มีเลขจากชื่อ");
+    lines.push("ไม่ได้ใส่ชื่อภาษาอังกฤษ จึงไม่มีเลขจากชื่อแบบพีทาโกรัส");
+  }
+  if (r.thaiName) {
+    const t = r.thaiName;
+    lines.push(
+      `ชื่อภาษาไทย (ตารางค่าอักษรไทยแบบที่นิยม): ${t.words.map((w) => `"${w.word}" = ${w.total}`).join(" + ")} = ผลรวม ${t.total} → ลดเป็น ${t.reduced} (${NUMBER_LORE[t.reduced].keyword})` +
+        (t.skipped.length ? ` · ตัวที่ไม่ได้นับ: ${t.skipped.join(" ")}` : ""),
+    );
+  } else {
+    lines.push("ไม่ได้ใส่ชื่อภาษาไทย");
   }
   if (today) {
     const y = today.getFullYear();

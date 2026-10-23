@@ -1,6 +1,6 @@
 // คำทำนายเลขศาสตร์แบบเล่าเรื่อง จากผลคำนวณและคลังความรู้ (ไม่ใช้ AI)
 
-import { coreNumbers, nameNumbers, personalYear, type CoreNumbers, type NameNumbers } from "./calc";
+import { coreNumbers, nameNumbers, personalYear, thaiNameNumbers, type CoreNumbers, type NameNumbers, type ThaiNameNumbers } from "./calc";
 import { KARMIC_LORE, NUMBER_LORE, PERSONAL_YEAR } from "./lore";
 
 export interface NumerologyInput {
@@ -9,16 +9,24 @@ export interface NumerologyInput {
   day: number;
   /** ชื่อภาษาอังกฤษ (ไม่บังคับ) */
   name?: string;
+  /** ชื่อ-นามสกุลภาษาไทย (ไม่บังคับ) */
+  thaiName?: string;
 }
 
 export interface NumerologyResult {
   input: NumerologyInput;
   core: CoreNumbers;
   name: NameNumbers | null;
+  thaiName: ThaiNameNumbers | null;
 }
 
 export function calculateNumerology(input: NumerologyInput): NumerologyResult {
-  return { input, core: coreNumbers(input.year, input.month, input.day), name: input.name ? nameNumbers(input.name) : null };
+  return {
+    input,
+    core: coreNumbers(input.year, input.month, input.day),
+    name: input.name ? nameNumbers(input.name) : null,
+    thaiName: input.thaiName ? thaiNameNumbers(input.thaiName) : null,
+  };
 }
 
 export interface Reading {
@@ -69,6 +77,20 @@ export function interpretNumerology(r: NumerologyResult, today?: Date): Reading[
         r.name.expression === r.core.lifePath
           ? "เลขชื่อตรงกับเลขเส้นทางชีวิต ชื่อนี้ช่วยเสริมเส้นทางของคุณได้ดีมาก"
           : "ใช้จุดแข็งของเลขชื่อช่วยเสริมเส้นทางชีวิตของคุณ",
+    });
+  }
+
+  if (r.thaiName) {
+    const t = r.thaiName;
+    const l = NUMBER_LORE[t.reduced];
+    const parts = t.words.map((w, i) => `${i === 0 ? "ชื่อ" : "นามสกุล"} "${w.word}" = ${w.total}`).join(" · ");
+    readings.push({
+      heading: `เลขศาสตร์ชื่อไทย: ผลรวม ${t.total}`,
+      body:
+        `${parts} รวมเป็น ${t.total} ลดเหลือ ${label(t.reduced)} (${l.keyword}) ชื่อนี้ส่งพลังด้าน${l.work.replace(/^เหมาะกับ/, "")}` +
+        (t.reduced === r.core.lifePath ? " และตรงกับเลขเส้นทางชีวิต ถือว่าชื่อเสริมดวงได้ดี" : "") +
+        (t.skipped.length ? ` (ตัว ${t.skipped.join(" ")} ไม่มีในตารางจึงไม่ได้นับ)` : ""),
+      advice: "ใช้ตารางค่าอักษรไทยแบบที่นิยมที่สุด แต่ละสำนักอาจให้ค่าต่างกันเล็กน้อย หากจะเปลี่ยนชื่อควรปรึกษาผู้เชี่ยวชาญด้วย",
     });
   }
 

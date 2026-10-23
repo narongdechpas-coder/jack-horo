@@ -53,12 +53,11 @@ export const SYSTEMS: SystemInfo[] = [
     name: "เลขศาสตร์ (Numerology)",
     navLabel: "เลขศาสตร์",
     origin: "western",
-    description: "เลขเส้นทางชีวิตจากวันเกิด เลขจากชื่อ และเลขปีส่วนตัวที่บอกบรรยากาศของปีนี้และปีหน้า",
+    description: "เลขเส้นทางชีวิตจากวันเกิด เลขจากชื่อทั้งภาษาไทยและอังกฤษ และเลขปีส่วนตัวของปีนี้และปีหน้า",
     href: "/numerology",
     accent: "teal",
-    // TODO: เปลี่ยนเป็น "cat-numerology" เมื่อได้ภาพ IMG-10
-    art: "hero-wide",
-    artAlt: "ตัวเลข 1 ถึง 9 เรืองแสงเรียงเป็นวงกลางอวกาศ",
+    art: "cat-numerology",
+    artAlt: "ตัวเลข 1 ถึง 9 ในลูกแก้วเรืองแสงเรียงเป็นวงล้อมเกลียวทองคำ ท่ามกลางเสาวิหารกรีกโบราณ",
   },
   {
     id: "playing-cards",

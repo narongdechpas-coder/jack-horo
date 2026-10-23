@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { coreNumbers, nameNumbers, personalMonth, personalYear, reduce } from "./calc";
+import { coreNumbers, nameNumbers, personalMonth, personalYear, reduce, thaiCharValue, thaiNameNumbers } from "./calc";
 import { NUMBER_LORE, PERSONAL_YEAR } from "./lore";
 import { calculateNumerology, interpretNumerology } from "./story";
 
@@ -76,5 +76,22 @@ describe("interpretNumerology", () => {
     expect(headings[0]).toMatch(/^เลขเส้นทางชีวิต 6/);
     expect(headings.some((h) => h.startsWith("เลขจากชื่อ"))).toBe(true);
     expect(headings.some((h) => h.startsWith("ปีส่วนตัว 6 (ปี 2569)"))).toBe(true);
+  });
+});
+
+describe("thaiNameNumbers", () => {
+  it("uses the common Thai table for consonants, vowels and tone marks", () => {
+    // ส7 ม5 ช2 า1 ย8 = 23 · ใ6 จ6 ด1 ี7 = 20
+    const r = thaiNameNumbers("สมชาย ใจดี")!;
+    expect(r.words).toEqual([{ word: "สมชาย", total: 23 }, { word: "ใจดี", total: 20 }]);
+    expect(r.total).toBe(43);
+    expect(r.reduced).toBe(7);
+    expect(r.skipped).toEqual([]);
+  });
+
+  it("covers all 44 consonants except the obsolete ฃ ฅ, and reports unknown characters", () => {
+    for (const c of "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ") expect(thaiCharValue(c), c).toBeDefined();
+    expect(thaiNameNumbers("ฃๆ")!.skipped).toEqual(["ฃ", "ๆ"]);
+    expect(thaiNameNumbers("Somchai")).toBeNull();
   });
 });

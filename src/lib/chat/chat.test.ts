@@ -64,8 +64,8 @@ describe("reading contexts", () => {
   });
 
   it("gives the AI the numerology numbers and three personal years", () => {
-    const text = numerologyContext(calculateNumerology({ year: 1990, month: 8, day: 15, name: "Somchai Jaidee" }), new Date(2026, 9, 23));
-    for (const m of ["เลขเส้นทางชีวิต: 6", "เลขชะตา (Expression)", "ปีส่วนตัวปีนี้ (พ.ศ. 2569): 6", "ปีส่วนตัวปีหน้า", "หลักการอ่าน"]) expect(text).toContain(m);
+    const text = numerologyContext(calculateNumerology({ year: 1990, month: 8, day: 15, name: "Somchai Jaidee", thaiName: "สมชาย ใจดี" }), new Date(2026, 9, 23));
+    for (const m of ["เลขเส้นทางชีวิต: 6", "เลขชะตา (Expression)", "ปีส่วนตัวปีนี้ (พ.ศ. 2569): 6", "ปีส่วนตัวปีหน้า", "ผลรวม 43", "หลักการอ่าน"]) expect(text).toContain(m);
     expect(text).not.toMatch(/undefined|NaN/);
     expect(text.length).toBeLessThan(LIMITS.contextChars);
   });
