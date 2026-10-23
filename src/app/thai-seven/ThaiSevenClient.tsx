@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { isFutureDate, useToday } from "@/lib/date";
+import { isFutureDate, parseISODate, useToday } from "@/lib/date";
 import { calculateSeven, sumLevel, type SevenResult } from "@/lib/systems/thai-seven/calculate";
 import { interpretSeven } from "@/lib/systems/thai-seven/story";
 import { ReadingList } from "@/components/ReadingList";
@@ -36,10 +36,7 @@ export function ThaiSevenClient() {
   const [time, setTime] = useState(qTime ?? "");
   const { result, error } = useMemo(() => compute(qDate, qTime), [qDate, qTime]);
   // วันนี้รู้ได้หลังเปิดหน้าในเบราว์เซอร์เท่านั้น (เว็บเป็น static)
-  const todayDate = useMemo(() => {
-    const m = today && /^(\d{4})-(\d{2})-(\d{2})$/.exec(today);
-    return m ? new Date(+m[1], +m[2] - 1, +m[3]) : undefined;
-  }, [today]);
+  const todayDate = useMemo(() => parseISODate(today), [today]);
   const taksa = result && todayDate ? sevenTaksa(result, todayDate) : null;
 
   function submit(e: React.FormEvent) {

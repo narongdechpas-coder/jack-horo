@@ -1,5 +1,6 @@
 // คำทำนายปาจื้อแบบเล่าเรื่อง: ใช้ภาษาธรรมดา ไม่มีอักษรจีนหรือศัพท์เทคนิค และมีคำแนะนำทุกหัวข้อ
 
+import { annualBazi, annualStory } from "./annual";
 import type { BaziResult } from "./calculate";
 import { DAY_MASTER_TEXT, ELEMENTS, ELEMENT_INFO, type Element } from "./names";
 
@@ -57,8 +58,8 @@ const el = (e: Element) => `ธาตุ${ELEMENT_INFO[e].th}`;
 const joinTh = (items: string[]) =>
   items.length <= 1 ? items.join("") : `${items.slice(0, -1).join(" ")} และ${items.at(-1)}`;
 
-/** สร้างคำทำนายแบบเล่าเรื่องจากผลคำนวณ (ไม่ใช้ AI) */
-export function interpretBazi(r: BaziResult): Reading[] {
+/** สร้างคำทำนายแบบเล่าเรื่องจากผลคำนวณ (ไม่ใช้ AI) ถ้าส่ง today มาจะมีดวงปีนี้ด้วย */
+export function interpretBazi(r: BaziResult, today?: Date): Reading[] {
   const dm = r.dayMaster;
   const dmEl = dm.stem.element;
   const readings: Reading[] = [];
@@ -128,6 +129,11 @@ export function interpretBazi(r: BaziResult): Reading[] {
       );
     }
     readings.push({ heading: "จังหวะชีวิต 10 ปี", body: parts.join(" "), advice: advice || undefined });
+  }
+
+  if (today) {
+    const { body, advice } = annualStory(annualBazi(r, today));
+    readings.push({ heading: "ดวงปีนี้", body, advice });
   }
 
   readings.push({

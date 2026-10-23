@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { isFutureDate, useToday } from "@/lib/date";
+import { isFutureDate, parseISODate, useToday } from "@/lib/date";
 import { calculateBazi, type BaziResult, type Gender } from "@/lib/systems/bazi/calculate";
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import { ELEMENT_INFO, TEN_GODS } from "@/lib/systems/bazi/names";
@@ -38,6 +38,8 @@ export function BaziClient() {
   const [time, setTime] = useState(qTime ?? "");
   const [gender, setGender] = useState(qGender ?? "");
   const { result, error } = useMemo(() => compute(qDate, qTime, qGender), [qDate, qTime, qGender]);
+  // วันนี้รู้ได้หลังเปิดหน้าในเบราว์เซอร์เท่านั้น (เว็บเป็น static)
+  const todayDate = useMemo(() => parseISODate(today), [today]);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -87,13 +89,13 @@ export function BaziClient() {
         <>
           <section className="space-y-3">
             <h2 className="text-xl font-semibold">คำทำนาย</h2>
-            <ReadingList items={interpretBazi(result)} />
+            <ReadingList items={interpretBazi(result, todayDate)} />
           </section>
           <FortuneChat
             key={`${qDate}-${qTime}-${qGender}`}
             systemName="ปาจื้อ"
-            context={baziContext(result)}
-            suggestions={["สรุปดวงของฉันให้สั้น ๆ", "ช่วงนี้ควรทำอะไรเพื่อเสริมดวง", "งานแบบไหนเหมาะกับธาตุของฉัน"]}
+            context={baziContext(result, todayDate)}
+            suggestions={["ปีนี้ดวงเป็นยังไง", "ช่วงนี้ควรทำอะไรเพื่อเสริมดวง", "งานแบบไหนเหมาะกับธาตุของฉัน"]}
           />
           <details className="rounded-xl border border-[var(--border)] p-4">
             <summary className="cursor-pointer font-semibold">ดูผังดวงสี่เสา (สำหรับผู้สนใจโหราศาสตร์จีน)</summary>

@@ -3,6 +3,7 @@
 
 import type { BaziResult } from "@/lib/systems/bazi/calculate";
 import { ELEMENT_INFO } from "@/lib/systems/bazi/names";
+import { annualBazi, annualContext } from "@/lib/systems/bazi/annual";
 import { interpretBazi } from "@/lib/systems/bazi/story";
 import type { OracleReading } from "@/lib/systems/oraculum/oracle";
 import { CARD_LORE } from "@/lib/systems/playing-cards/lore";
@@ -113,7 +114,7 @@ export function sevenContext(r: SevenResult, today?: Date): string {
   return lines.join("\n");
 }
 
-export function baziContext(r: BaziResult): string {
+export function baziContext(r: BaziResult, today?: Date): string {
   const el = (e: keyof typeof ELEMENT_INFO) => `ธาตุ${ELEMENT_INFO[e].th}`;
   const current = r.luck?.find((l) => l.current);
   return [
@@ -121,6 +122,7 @@ export function baziContext(r: BaziResult): string {
     `ธาตุประจำตัว: ${el(r.dayMaster.stem.element)} · ดวง${r.strong ? "แข็ง" : "อ่อน"}`,
     `ธาตุที่ส่งเสริม: ${r.favorable.map(el).join(" ")} · ธาตุที่ควรเลี่ยง: ${r.unfavorable.map(el).join(" ")}`,
     ...(current ? [`ช่วงชีวิต 10 ปีปัจจุบัน: ${current.startYear}–${current.endYear} (${current.favorable ? "ช่วงขาขึ้น" : "ช่วงต้องอดทน"})`] : []),
-    readingsText(interpretBazi(r)),
+    ...(today ? [`วันนี้: ${thaiDate(today)}`, annualContext(annualBazi(r, today))] : []),
+    readingsText(interpretBazi(r, today)),
   ].join("\n");
 }
