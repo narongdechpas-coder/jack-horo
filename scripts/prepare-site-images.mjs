@@ -1,5 +1,5 @@
 // Convert the Cosmic Neon artwork (docs/design/image-assets.md) into responsive WebP files.
-// Usage: node scripts/prepare-site-images.mjs <folder with IMG-01.png … IMG-08.png>
+// Usage: node scripts/prepare-site-images.mjs <folder with IMG-01.png … IMG-09.png>
 // Originals stay outside the repo; the output and src/lib/art-manifest.json are committed.
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -15,6 +15,7 @@ const ASSETS = [
   { id: "IMG-06", name: "cat-bazi", widths: [480, 960] },
   { id: "IMG-07", name: "daily", widths: [480, 900] },
   { id: "IMG-08", name: "cat-zodiac", widths: [480, 960] },
+  { id: "IMG-09", name: "cat-iching", widths: [480, 960] },
 ];
 
 const src = process.argv[2];

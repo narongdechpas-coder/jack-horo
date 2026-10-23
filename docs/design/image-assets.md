@@ -21,7 +21,7 @@
 | IMG-05 | การ์ด ตำราพยากรณ์นโปเลียน | DONE | 4:3 | ทึบ | เหมือนข้างบน | `public/art/cat-oraculum-*.webp` |
 | IMG-06 | การ์ด ปาจื้อ | DONE | 4:3 | ทึบ | เหมือนข้างบน | `public/art/cat-bazi-*.webp` |
 | IMG-08 | การ์ดและแบนเนอร์ 12 ราศี | DONE | 4:3 | ทึบ | เหมือนการ์ดอื่น | `public/art/cat-zodiac-*.webp` |
-| IMG-09 | การ์ดและแบนเนอร์อี้จิง | PENDING | 4:3 | ทึบ | ระหว่างรอใช้ hero-wide ชั่วคราว (registry.ts) | `public/art/cat-iching-*.webp` |
+| IMG-09 | การ์ดและแบนเนอร์อี้จิง | DONE | 4:3 | ทึบ | เหมือนการ์ดอื่น | `public/art/cat-iching-*.webp` |
 | IMG-07 | ดวงวันนี้ตามวันเกิด | DONE | 3:4 | ทึบ | มือถือแสดงเป็นแถบด้านบน | `public/art/daily-*.webp` |
 | IMG-08 | ไพ่ประจำวัน | EXISTING | 300×527 | — | — | ใช้ภาพ Rider-Waite ของไพ่ที่สุ่มได้จริง `public/tarot/<id>.webp` |
 | — | ดาว เนบิวลา พื้นหลัง ไอคอน | CSS/SVG | — | — | — | ทำด้วย CSS และ SVG ไม่ต้องใช้ภาพ |
