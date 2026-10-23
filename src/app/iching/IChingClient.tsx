@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { coinsToLine, isChanging, isYang, parseLines, readIChing, tossCoins, type Hexagram, type LineValue } from "@/lib/systems/iching/cast";
 import { interpretIChing } from "@/lib/systems/iching/story";
@@ -54,6 +54,25 @@ function HexagramCard({ h, changing, title }: { h: Hexagram; changing?: number[]
   );
 }
 
+/** เหรียญจีนโบราณ: หัวมีอักษร 開元通寶 รอบรูสี่เหลี่ยม ก้อยเป็นด้านเรียบ */
+function Coin({ heads, className = "", style }: { heads: boolean; className?: string; style?: React.CSSProperties }) {
+  return (
+    <span className={`coin ${heads ? "coin-heads" : "coin-tails"} h-14 w-14 rounded-full ${className}`} style={style} aria-hidden>
+      {heads && (
+        <>
+          <span className="coin-char top-0.5 left-1/2 -translate-x-1/2">開</span>
+          <span className="coin-char bottom-0.5 left-1/2 -translate-x-1/2">元</span>
+          <span className="coin-char right-1 top-1/2 -translate-y-1/2">通</span>
+          <span className="coin-char left-1 top-1/2 -translate-y-1/2">寶</span>
+        </>
+      )}
+    </span>
+  );
+}
+
+/** เวลาที่เหรียญลอยและพลิกก่อนตกถึงพื้น (ตรงกับ coin-flip ใน globals.css) */
+const FLIP_MS = 1100;
+
 export function IChingClient() {
   const params = useSearchParams();
   const router = useRouter();
@@ -67,6 +86,10 @@ export function IChingClient() {
   const [cast, setCast] = useState<LineValue[]>([]);
   const [coins, setCoins] = useState<boolean[] | null>(null);
   const [flipKey, setFlipKey] = useState(0);
+  // idle → shaking (กดค้างเขย่าเหรียญ) → flipping (ปล่อยแล้วเหรียญลอย) → idle
+  const [phase, setPhase] = useState<"idle" | "shaking" | "flipping">("idle");
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
 
   function finish(all: LineValue[]) {
     const q = new URLSearchParams({ l: all.join("") });
@@ -74,13 +97,23 @@ export function IChingClient() {
     router.push(`${pathname}?${q}`);
   }
 
-  function tossOne() {
+  function startShake() {
+    if (phase === "idle" && cast.length < 6) setPhase("shaking");
+  }
+
+  function release() {
+    if (phase !== "shaking") return;
     const c = tossCoins();
-    const next = [...cast, coinsToLine(c)];
     setCoins(c);
     setFlipKey((k) => k + 1);
-    setCast(next);
-    if (next.length === 6) setTimeout(() => finish(next), 700);
+    setPhase("flipping");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    timer.current = setTimeout(() => {
+      const next = [...cast, coinsToLine(c)];
+      setCast(next);
+      setPhase("idle");
+      if (next.length === 6) timer.current = setTimeout(() => finish(next), 700);
+    }, reduced ? 250 : FLIP_MS);
   }
 
   function tossAll() {
@@ -90,6 +123,8 @@ export function IChingClient() {
   }
 
   function restart() {
+    clearTimeout(timer.current);
+    setPhase("idle");
     setCast([]);
     setCoins(null);
     setQuestion("");
@@ -152,17 +187,23 @@ export function IChingClient() {
       <div className="space-y-3">
         <div className="text-sm font-semibold">2. โยนเหรียญ 6 ครั้ง เส้นจะก่อตัวจากล่างขึ้นบน</div>
         <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-center sm:gap-10">
-          <div className="flex gap-3" aria-live="polite" data-testid="coins">
-            {(coins ?? [true, false, true]).map((head, i) => (
-              <span key={`${flipKey}-${i}`} className="flex flex-col items-center gap-1">
-                <span
-                  className={`coin h-14 w-14 rounded-full ${coins ? "coin-flip" : "opacity-60"}`}
-                  style={{ animationDelay: `${i * 80}ms` }}
-                  aria-hidden
-                />
-                <span className="h-4 text-xs text-[var(--muted)]">{coins ? (head ? "หัว" : "ก้อย") : ""}</span>
-              </span>
-            ))}
+          <div className="flex gap-3" data-testid="coins">
+            {(coins ?? [true, true, true]).map((head, i) => {
+              const landed = phase === "idle" && coins;
+              const motion = phase === "shaking" ? "coin-shake" : phase === "flipping" ? "coin-flip" : "";
+              return (
+                <span key={`${flipKey}-${i}`} className="flex flex-col items-center gap-1">
+                  <Coin
+                    heads={phase === "shaking" || head}
+                    className={`${motion} ${coins || phase !== "idle" ? "" : "opacity-60"}`}
+                    style={{ animationDelay: `${i * 90}ms` }}
+                  />
+                  <span className="h-4 text-xs text-[var(--muted)]" aria-live="polite">
+                    {landed ? (head ? "หัว" : "ก้อย") : ""}
+                  </span>
+                </span>
+              );
+            })}
           </div>
           <div className="flex flex-col-reverse gap-1.5" data-testid="cast-lines">
             {Array.from({ length: 6 }, (_, i) => {
@@ -187,14 +228,38 @@ export function IChingClient() {
           </div>
         </div>
         <div className="flex flex-wrap justify-center gap-3">
-          <button type="button" onClick={tossOne} disabled={cast.length >= 6} className="btn-primary min-h-11 rounded-lg px-5 py-2 font-semibold disabled:opacity-50">
-            🪙 โยนเหรียญ ({Math.min(cast.length + 1, 6)}/6)
+          <button
+            type="button"
+            disabled={cast.length >= 6 || phase === "flipping"}
+            onPointerDown={(e) => {
+              e.currentTarget.setPointerCapture(e.pointerId);
+              startShake();
+            }}
+            onPointerUp={release}
+            onPointerCancel={release}
+            onKeyDown={(e) => {
+              if ((e.key === " " || e.key === "Enter") && !e.repeat) {
+                e.preventDefault();
+                startShake();
+              }
+            }}
+            onKeyUp={(e) => {
+              if (e.key === " " || e.key === "Enter") release();
+            }}
+            onContextMenu={(e) => e.preventDefault()}
+            style={{ touchAction: "none" }}
+            className="btn-primary min-h-11 select-none rounded-lg px-5 py-2 font-semibold disabled:opacity-50"
+            data-testid="toss"
+          >
+            {phase === "shaking" ? "🤲 กำลังเขย่า… ปล่อยเพื่อโยน" : phase === "flipping" ? "🪙 เหรียญกำลังลอย…" : `🪙 กดค้างเพื่อเขย่าเหรียญ (${Math.min(cast.length + 1, 6)}/6)`}
           </button>
-          <button type="button" onClick={tossAll} disabled={cast.length >= 6} className="btn-secondary min-h-11 rounded-lg px-4 py-2 disabled:opacity-50">
+          <button type="button" onClick={tossAll} disabled={cast.length >= 6 || phase !== "idle"} className="btn-secondary min-h-11 rounded-lg px-4 py-2 disabled:opacity-50">
             โยนที่เหลือทั้งหมด
           </button>
         </div>
-        <p className="text-center text-xs text-[var(--muted)]">หัว = 3 ก้อย = 2 ผลรวม 6 หรือ 9 คือเส้นที่กำลังเปลี่ยน (สีเขียว)</p>
+        <p className="text-center text-xs text-[var(--muted)]">
+          ตั้งจิตถึงคำถาม กดปุ่มค้างไว้เพื่อเขย่าเหรียญ แล้วปล่อยเพื่อโยน · หัว (ด้านมีอักษร) = 3 ก้อย (ด้านเรียบ) = 2 ผลรวม 6 หรือ 9 คือเส้นที่กำลังเปลี่ยน (สีเขียว)
+        </p>
       </div>
     </div>
   );

@@ -322,11 +322,10 @@ body {
   .splash-orb, .splash-title { animation: none; }
 }
 
-/* อี้จิง: เหรียญจีนโบราณ (รูสี่เหลี่ยมตรงกลาง) พลิกตอนโยน */
+/* อี้จิง: เหรียญจีนโบราณ (รูสี่เหลี่ยมตรงกลาง) หัว = ทองมีอักษร ก้อย = สำริดเรียบมีวงขอบ */
 .coin {
   position: relative;
-  color: #451a03;
-  background: radial-gradient(circle at 35% 30%, #fde68a, #d97706 60%, #92400e);
+  display: inline-block;
   box-shadow: 0 0 0 2px #92400e, 0 4px 12px -4px rgb(0 0 0 / 0.5);
 }
 .coin::after {
@@ -335,18 +334,45 @@ body {
   width: 0.7rem;
   height: 0.7rem;
   background: var(--surface);
-  border: 1.5px solid #92400e;
+  border: 1.5px solid #78350f;
   inset: 0;
   margin: auto;
 }
-@keyframes coin-flip {
-  from { transform: rotateY(0) translateY(0); }
-  50% { transform: rotateY(540deg) translateY(-14px); }
-  to { transform: rotateY(1080deg) translateY(0); }
+.coin-heads {
+  background: radial-gradient(circle at 35% 30%, #fde68a, #d97706 60%, #92400e);
 }
-.coin-flip { animation: coin-flip 0.6s ease-out both; }
+.coin-tails {
+  background:
+    radial-gradient(circle, transparent 0 55%, rgb(69 26 3 / 0.55) 56% 60%, transparent 61%),
+    radial-gradient(circle at 35% 30%, #d6b48a, #8a5a2b 60%, #4a2c12);
+  box-shadow: 0 0 0 2px #4a2c12, 0 4px 12px -4px rgb(0 0 0 / 0.5);
+}
+.coin-char {
+  position: absolute;
+  font-size: 0.6rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #78350f;
+}
+/* กดค้าง: เหรียญสั่นเหมือนเขย่าในมือ */
+@keyframes coin-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(-3px, 2px) rotate(-12deg); }
+  50% { transform: translate(3px, -2px) rotate(10deg); }
+  75% { transform: translate(-2px, -3px) rotate(-6deg); }
+}
+.coin-shake { animation: coin-shake 0.18s linear infinite; }
+/* ปล่อย: เหรียญลอยขึ้น หมุน แล้วตกลงพื้น (1.1 วินาที ตรงกับ FLIP_MS) */
+@keyframes coin-flip {
+  0% { transform: translateY(0) rotateX(0); }
+  45% { transform: translateY(-46px) rotateX(900deg); }
+  80% { transform: translateY(0) rotateX(1440deg); }
+  90% { transform: translateY(-6px) rotateX(1440deg); }
+  100% { transform: translateY(0) rotateX(1440deg); }
+}
+.coin-flip { animation: coin-flip 1.1s cubic-bezier(0.3, 0.7, 0.4, 1) both; }
 @media (prefers-reduced-motion: reduce) {
-  .coin-flip { animation: none; }
+  .coin-flip, .coin-shake { animation: none; }
 }
 
 /* Card shuffle: two halves of the deck slide apart and riffle back together */
