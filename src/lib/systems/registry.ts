@@ -27,17 +27,6 @@ export const ORIGIN_LABELS: Record<Origin, string> = {
 // เพิ่มศาสตร์ใหม่: สร้างโฟลเดอร์ใน lib/systems/<id> และหน้าใน app/<id> แล้วลงทะเบียนที่นี่
 export const SYSTEMS: SystemInfo[] = [
   {
-    id: "thai-seven",
-    name: "เลข 7 ตัว",
-    navLabel: "เลข 7 ตัว",
-    origin: "thai",
-    description: "ทักษาเลข 7 ตัว 4 ฐาน คำนวณจากวัน เดือนจันทรคติ และปีนักษัตรเกิด",
-    href: "/thai-seven",
-    accent: "blue",
-    art: "cat-thai-seven",
-    artAlt: "ลายเส้นทองรูปเลขโรมัน VII ในวงโคจรของดาว 7 ดวง บนพื้นน้ำเงินเข้ม",
-  },
-  {
     id: "zodiac",
     name: "12 ราศี (โหราศาสตร์สากล)",
     navLabel: "12 ราศี",
@@ -91,6 +80,17 @@ export const SYSTEMS: SystemInfo[] = [
     accent: "cyan",
     art: "cat-oraculum",
     artAlt: "ลายเส้นทองรูปตำราเปิด มีจุดดาวห้าแถวลอยขึ้นใต้ช่อมะกอก บนพื้นน้ำเงินเข้ม",
+  },
+  {
+    id: "thai-seven",
+    name: "เลข 7 ตัว",
+    navLabel: "เลข 7 ตัว",
+    origin: "thai",
+    description: "ทักษาเลข 7 ตัว 4 ฐาน คำนวณจากวัน เดือนจันทรคติ และปีนักษัตรเกิด",
+    href: "/thai-seven",
+    accent: "blue",
+    art: "cat-thai-seven",
+    artAlt: "ลายเส้นทองรูปเลขโรมัน VII ในวงโคจรของดาว 7 ดวง บนพื้นน้ำเงินเข้ม",
   },
   {
     id: "bazi",
