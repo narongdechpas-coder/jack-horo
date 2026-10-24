@@ -1,0 +1,6 @@
+:HL["/jack-horo/_next/static/chunks/067ruci0x1cmp.css","style"]
+:HC["/",""]
+:HL["/jack-horo/art/cat-bazi-480.webp","image",{"imageSrcSet":"/jack-horo/art/cat-bazi-480.webp 480w, /jack-horo/art/cat-bazi-960.webp 960w","imageSizes":"(min-width: 896px) 520px, (min-width: 640px) 60vw, 100vw","fetchPriority":"high"}]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"bazi","h":64,"c":"$Q2"}]]
+0:{"b":"YQzO9aPExkQ1m3l9_I6nW","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

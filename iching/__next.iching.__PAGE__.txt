@@ -1,0 +1,30 @@
+2:"$Sreact.fragment"
+3:"/jack-horo/_next/static/chunks/39_jt3i62n-86.js"
+4:I[39756,["$3"],"default"]
+5:I[37457,["$3"],"default"]
+a:"$Sreact.suspense"
+b:"/jack-horo/_next/static/chunks/188480_l_hqno.js"
+c:"/jack-horo/_next/static/chunks/0id-pm-pnu2y0.js"
+d:"/jack-horo/_next/static/chunks/1kf6sck9axg-r.js"
+e:I[68313,["$3","$b","$c","$d"],"IChingClient"]
+f:I[97367,["$3"],"OutletBoundary"]
+12:"ViewportBoundary"
+13:I[97367,["$3"],"$12"]
+14:"MetadataBoundary"
+15:I[97367,["$3"],"$14"]
+16:I[27201,["$3"],"IconMark"]
+:HL["/jack-horo/art/cat-iching-480.webp","image",{"imageSrcSet":"/jack-horo/art/cat-iching-480.webp 480w, /jack-horo/art/cat-iching-960.webp 960w","imageSizes":"(min-width: 896px) 520px, (min-width: 640px) 60vw, 100vw","fetchPriority":"high"}]
+7:X
+7:C
+8:X
+9:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[["$","div",null,{"className":"mx-auto max-w-4xl space-y-8 px-4 py-8","children":[["$","section",null,{"className":"space-y-4","children":[["$","div",null,{"className":"relative isolate overflow-hidden rounded-2xl border bg-[#030c2a]","style":{"borderColor":"color-mix(in srgb, var(--neon-jade) 50%, var(--border))","boxShadow":"0 16px 44px -20px var(--neon-jade)"},"children":[["$","img",null,{"src":"/jack-horo/art/cat-iching-480.webp","srcSet":"/jack-horo/art/cat-iching-480.webp 480w, /jack-horo/art/cat-iching-960.webp 960w","sizes":"(min-width: 896px) 520px, (min-width: 640px) 60vw, 100vw","width":1448,"height":1086,"alt":"","loading":"eager","fetchPriority":"high","decoding":"async","className":"absolute inset-0 -z-10 h-full w-full object-cover sm:left-auto sm:w-3/5 sm:[mask-image:linear-gradient(to_right,transparent,black_35%)]"}],["$","div",null,{"aria-hidden":true,"className":"absolute inset-0 -z-10 bg-gradient-to-t from-[#050817] via-[#050817]/70 to-[#050817]/10 sm:bg-gradient-to-r sm:from-[#050817]/80 sm:via-transparent sm:to-transparent"}],["$","div",null,{"className":"flex min-h-48 flex-col justify-end gap-2 p-5 pt-20 sm:min-h-64 sm:p-7","children":[["$","span",null,{"className":"w-fit rounded-full border px-3 py-0.5 text-xs font-semibold text-white backdrop-blur-sm","style":{"borderColor":"var(--neon-jade)","background":"color-mix(in srgb, var(--neon-jade) 22%, transparent)"},"children":"ศาสตร์จีน"}],["$","h1",null,{"className":"text-3xl font-bold text-white drop-shadow sm:text-4xl","children":"อี้จิง (I Ching)"}]]}]]}],["$","p",null,{"className":"leading-relaxed text-[var(--muted)]","children":"คัมภีร์แห่งความเปลี่ยนแปลงของจีนที่มีอายุกว่าสามพันปี ตั้งคำถามที่ค้างใจ แล้วโยนเหรียญ 3 เหรียญ 6 ครั้ง จะได้ 1 ใน 64 ฉากที่บอกสถานการณ์ตอนนี้ และเส้นที่กำลังเปลี่ยนจะชี้ว่าเรื่องกำลังไปทางไหน"}]]}],["$","$a",null,{"children":["$","$Le",null,{}]}]]}],[["$","script","script-0",{"src":"/jack-horo/_next/static/chunks/188480_l_hqno.js","async":true}],["$","script","script-1",{"src":"/jack-horo/_next/static/chunks/0id-pm-pnu2y0.js","async":true}],["$","script","script-2",{"src":"/jack-horo/_next/static/chunks/1kf6sck9axg-r.js","async":true}]],["$","$Lf",null,{"children":["$","$a",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$8"}}]]
+1:[["children",{"s":"iching","h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}]}]]}],"p":"$@6","v":"$7","s":"$8"},"c":"$Q9"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#050817","media":"(prefers-color-scheme: dark)"}],["$","meta","3",{"name":"theme-color","content":"#f6f5ff","media":"(prefers-color-scheme: light)"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$a",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"อี้จิง | Horoscope Hub"}],["$","meta","1",{"name":"description","content":"รวมศาสตร์ดูดวงจากไทย ตะวันตก และจีน ไว้ในที่เดียว: เลข 7 ตัว ไพ่ป๊อก ไพ่ยิปซี ตำราพยากรณ์นโปเลียน และปาจื้อ"}],["$","link","2",{"rel":"manifest","href":"/jack-horo/manifest.webmanifest"}],["$","link","3",{"rel":"icon","href":"/jack-horo/icon.svg?icon.36813cmfkar2u.svg","sizes":"any","type":"image/svg+xml"}],["$","link","4",{"rel":"apple-touch-icon","href":"/jack-horo/apple-icon.png?apple-icon.2jav32dbf7bmj.png","sizes":"180x180","type":"image/png"}],["$","$L16","5",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@17","v":null,"s":"$8"}},"a":"$@18","u":"$@19","b":"YQzO9aPExkQ1m3l9_I6nW"}
+10:null
+19:true
+8:300
+8:C
+18:0
+6:"$undefined"
+17:"$undefined"
+11:"$undefined"
