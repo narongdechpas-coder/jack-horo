@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BAR_COLOR } from "./init-scripts";
 
 type Theme = "light" | "dark";
 
@@ -10,27 +11,16 @@ function currentTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-/** สีแถบสถานะของมือถือ ให้ตรงกับพื้นหลังของ header (--bg ใน globals.css) */
-const BAR_COLOR: Record<Theme, string> = { dark: "#050817", light: "#f6f5ff" };
-
-/**
- * meta theme-color ตั้งตามธีมของเครื่องไว้ (layout.tsx) ถ้าผู้ใช้เลือกธีมเองจากปุ่มนี้
- * แถบสถานะต้องเปลี่ยนตาม ไม่งั้นจะได้แถบสว่างบนเว็บโหมดมืด หรือกลับกัน
- */
+/** ให้แถบสถานะของมือถือตรงกับธีมที่ผู้ใช้เลือก (แท็กสร้างโดย THEME_COLOR_SCRIPT) */
 function syncBarColor(theme: Theme) {
-  document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
-    m.content = BAR_COLOR[theme];
-  });
+  const meta = document.getElementById("theme-color") as HTMLMetaElement | null;
+  if (meta) meta.content = BAR_COLOR[theme];
 }
 
 /** Switch between dark and light; the choice is remembered on this device. */
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const [theme, setTheme] = useState<Theme | null>(null);
-  useEffect(() => {
-    const t = currentTheme();
-    setTheme(t);
-    if (document.documentElement.dataset.theme) syncBarColor(t);
-  }, []);
+  useEffect(() => setTheme(currentTheme()), []);
 
   function toggle() {
     const next: Theme = currentTheme() === "dark" ? "light" : "dark";

@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { InstallApp } from "@/components/site/InstallApp";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SplashScreen } from "@/components/site/SplashScreen";
-import { SPLASH_INIT_SCRIPT, THEME_INIT_SCRIPT } from "@/components/site/init-scripts";
+import { SPLASH_INIT_SCRIPT, THEME_COLOR_SCRIPT, THEME_INIT_SCRIPT } from "@/components/site/init-scripts";
 
 export const metadata: Metadata = {
   title: "Horoscope Hub",
@@ -19,10 +19,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // ให้ header ขยายขึ้นไปใต้แถบสถานะของ iPhone เมื่อเปิดจากแอปที่ติดตั้ง (คู่กับ safe-area ใน SiteHeader)
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#050817" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f5ff" },
-  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -30,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // data-theme is set before paint by THEME_INIT_SCRIPT, so React must not complain about it
     <html lang="th" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT + SPLASH_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT + THEME_COLOR_SCRIPT + SPLASH_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <SplashScreen />
