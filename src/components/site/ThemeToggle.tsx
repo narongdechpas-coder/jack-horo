@@ -10,14 +10,32 @@ function currentTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+/** สีแถบสถานะของมือถือ ให้ตรงกับพื้นหลังของ header (--bg ใน globals.css) */
+const BAR_COLOR: Record<Theme, string> = { dark: "#050817", light: "#f6f5ff" };
+
+/**
+ * meta theme-color ตั้งตามธีมของเครื่องไว้ (layout.tsx) ถ้าผู้ใช้เลือกธีมเองจากปุ่มนี้
+ * แถบสถานะต้องเปลี่ยนตาม ไม่งั้นจะได้แถบสว่างบนเว็บโหมดมืด หรือกลับกัน
+ */
+function syncBarColor(theme: Theme) {
+  document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
+    m.content = BAR_COLOR[theme];
+  });
+}
+
 /** Switch between dark and light; the choice is remembered on this device. */
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const [theme, setTheme] = useState<Theme | null>(null);
-  useEffect(() => setTheme(currentTheme()), []);
+  useEffect(() => {
+    const t = currentTheme();
+    setTheme(t);
+    if (document.documentElement.dataset.theme) syncBarColor(t);
+  }, []);
 
   function toggle() {
     const next: Theme = currentTheme() === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
+    syncBarColor(next);
     try {
       localStorage.setItem("theme", next);
     } catch {

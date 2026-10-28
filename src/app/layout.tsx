@@ -17,6 +17,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // ให้ header ขยายขึ้นไปใต้แถบสถานะของ iPhone เมื่อเปิดจากแอปที่ติดตั้ง (คู่กับ safe-area ใน SiteHeader)
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#050817" },
     { media: "(prefers-color-scheme: light)", color: "#f6f5ff" },

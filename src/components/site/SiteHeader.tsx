@@ -22,7 +22,7 @@ export function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] backdrop-blur">
+    <header className="sticky top-0 z-30 pt-[env(safe-area-inset-top)] border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] backdrop-blur">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:rounded-lg focus:bg-[var(--surface)] focus:px-3 focus:py-2">
         ข้ามไปเนื้อหาหลัก
       </a>
@@ -66,7 +66,7 @@ export function SiteHeader() {
           if (e.target === menu.current) menu.current.close(); // click on the backdrop
         }}
         onClose={() => opener.current?.focus()}
-        className="m-0 ml-auto h-dvh max-h-none w-[min(20rem,85vw)] max-w-none border-l border-[var(--border)] bg-[var(--surface)] p-0 text-[var(--text)] backdrop:bg-black/60"
+        className="m-0 ml-auto h-dvh max-h-none w-[min(20rem,85vw)] max-w-none pt-[env(safe-area-inset-top)] border-l border-[var(--border)] bg-[var(--surface)] p-0 text-[var(--text)] backdrop:bg-black/60"
         aria-label="เมนู"
         data-testid="mobile-menu"
       >
