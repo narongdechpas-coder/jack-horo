@@ -4,6 +4,7 @@ import "@fontsource/noto-sans-thai/600.css";
 import "@fontsource/noto-sans-thai/700.css";
 import "./globals.css";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { InstallApp } from "@/components/site/InstallApp";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SplashScreen } from "@/components/site/SplashScreen";
 import { SPLASH_INIT_SCRIPT, THEME_INIT_SCRIPT } from "@/components/site/init-scripts";
@@ -11,6 +12,8 @@ import { SPLASH_INIT_SCRIPT, THEME_INIT_SCRIPT } from "@/components/site/init-sc
 export const metadata: Metadata = {
   title: "Horoscope Hub",
   description: "รวมศาสตร์ดูดวงจากไทย ตะวันตก และจีน ไว้ในที่เดียว: เลข 7 ตัว ไพ่ป๊อก ไพ่ยิปซี ตำราพยากรณ์นโปเลียน และปาจื้อ",
+  // iPhone: เปิดจากหน้าจอโฮมแบบเต็มจอเหมือนแอป
+  appleWebApp: { capable: true, title: "Horoscope Hub", statusBarStyle: "black-translucent" },
 };
 
 export const viewport: Viewport = {
@@ -34,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <InstallApp />
       </body>
     </html>
   );

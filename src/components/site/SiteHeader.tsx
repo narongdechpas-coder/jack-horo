@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { SYSTEMS } from "@/lib/systems/registry";
+import { InstallMenuItem } from "./InstallApp";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -99,6 +100,7 @@ export function SiteHeader() {
               </Link>
             </li>
           ))}
+          <InstallMenuItem />
         </ul>
       </dialog>
     </header>

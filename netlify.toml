@@ -12,3 +12,9 @@
   NODE_VERSION = "22"
   # Shows the "ถามหมอดูต่อ" chat; GitHub Pages builds leave it unset, so the chat stays hidden there
   NEXT_PUBLIC_CHAT_ENDPOINT = "/.netlify/functions/fortune-chat"
+
+# Service worker: เช็กเวอร์ชันใหม่ทุกครั้ง ผู้ใช้ที่ติดตั้งแอปจะได้ของใหม่ทันทีหลัง deploy
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
